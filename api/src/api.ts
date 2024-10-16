@@ -1,20 +1,21 @@
-const express = require('express');
+import express, { Request, Response } from "express";
+import { pool, Cars } from './db';
+import { RowDataPacket } from "mysql2";
+
 const cars = express.Router();
 const router = express.Router();
 
-const { pool, Cars } = require('./db.js');
-
 cars.use('/cars', router);
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    let { page, limit, brand, model, year } = req.query;
+    let { brand, model, year } = req.query;
 
-    limit = Number(limit);
+    let limit = Number(req.query.limit);
     if (limit < 1 || isNaN(limit)) limit = 5;
     if (limit > 10) limit = 10;
     
-    page = Number(page);
+    let page = Number(req.query.page);
     if (page < 1 || isNaN(page)) page = 1;
   
     // Query for getting how many cars are in the db according to request
@@ -35,7 +36,7 @@ router.get('/', async (req, res) => {
       data_select.push(year);
     }
   
-    const count = (await pool.promise().query(query_select, data_select))[0][0].count;
+    const count: number = (await pool.query<RowDataPacket[]>(query_select, data_select))[0][0].count;
     const pages = Math.ceil(count/limit);
     if (count === 0) {
       res.status(204).json();
@@ -47,7 +48,7 @@ router.get('/', async (req, res) => {
     query_select += "LIMIT ? OFFSET ?";
     data_select.push(limit, (page - 1) * limit);
   
-    const data = (await pool.promise().query(query_select, data_select))[0];
+    const data = (await pool.query<RowDataPacket[]>(query_select, data_select))[0];
   
     const data_with_items = await Promise.all(data.map(async (car) => {
       return {...car, items: await Cars.get_items(car.id)};
@@ -65,9 +66,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
-    const { brand, model, year, items } = req.body;
+    const { user_id, brand, model, year, items } = req.body;
 
     // Check that all required items are present in the request
     if (!brand) {
@@ -97,7 +98,7 @@ router.post('/', async (req, res) => {
       return;
     }
 
-    const id = await Cars.add(brand, model, year);
+    const id = await Cars.add(user_id, brand, model, year);
 
     // Register car's items in the database
     Cars.add_items(id, items);
@@ -110,9 +111,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
+    const id = Number(req.params.id);
   
     const car = await Cars.get(id);
     if (car === undefined) {
@@ -133,9 +134,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     let { brand, model, year, items } = req.body;
   
     if (year < 1886 || year > 2025) {
@@ -161,7 +162,7 @@ router.patch('/:id', async (req, res) => {
   
     // Update cars table
     const query = "UPDATE cars SET brand = (?), model = (?), year = (?) WHERE id = (?)";
-    await pool.promise().query(query, [brand, model, year, id]);
+    await pool.query(query, [brand, model, year, id]);
   
     // Update items table
     if (items !== undefined && items.length > 0) {
@@ -181,9 +182,9 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => { 
+router.delete('/:id', async (req: Request, res: Response) => { 
   try {
-    const id = req.params.id;
+    const id = Number(req.params.id);
   
     const car = await Cars.get(id);
     if (car === undefined) {
@@ -201,4 +202,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = cars;
+export default cars;

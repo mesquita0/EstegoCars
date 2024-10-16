@@ -4,7 +4,7 @@
   "description": "API para cadastro de veículos para a locação.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js localhost 5000",
+    "start": "nodemon ./built/index.js localhost 5000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,9 +14,12 @@
   "author": "Kaynã",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",

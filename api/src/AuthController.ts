@@ -1,8 +1,22 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { Users } from "./db";
 
 const router = express.Router();
+const private_key = "dasuhfga"; // TODO: change private key
+
+function isAuthenticated(req: Request, res: Response, next: NextFunction) {
+  try {
+    const token = req.headers.authorization!;
+    const decode = jwt.verify(token, private_key);
+    req.body.user = decode;
+    next();
+  }
+  catch (error) {
+    res.sendStatus(401); // TODO: redirect to login
+  }
+}
 
 router.post('/login', async (req: Request, res: Response) => {
   const { cpf, password } = req.body;
@@ -14,7 +28,9 @@ router.post('/login', async (req: Request, res: Response) => {
     return;
   }
 
-  // TODO: save session and redirect to inicial page
+  // TODO: redirect to inicial page
+  const token = jwt.sign({ id: user.id }, private_key);
+  res.status(200).send({ token });
 });
 
 router.post('/register', async (req: Request, res: Response) => {
@@ -31,7 +47,10 @@ router.post('/register', async (req: Request, res: Response) => {
 
   const id = await Users.add(cpf, name, email, hash, phone_number);
 
-  // TODO: save session and redirect to inicial page
+  // TODO: redirect to inicial page
+  const token = jwt.sign({ id }, private_key);
+  res.status(200).send({ token });
 });
 
+export { isAuthenticated };
 export default router;

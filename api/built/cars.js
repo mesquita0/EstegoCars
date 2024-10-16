@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const db_1 = require("./db");
+const AuthController_1 = require("./AuthController");
 const cars = express_1.default.Router();
 const router = express_1.default.Router();
 cars.use('/cars', router);
@@ -69,7 +70,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ "error": "internal server error" });
     }
 }));
-router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', AuthController_1.isAuthenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user_id, brand, model, year, items } = req.body;
         // Check that all required items are present in the request

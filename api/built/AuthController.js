@@ -12,10 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isAuthenticated = isAuthenticated;
 const express_1 = __importDefault(require("express"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
 const router = express_1.default.Router();
+const private_key = "dasuhfga"; // TODO: change private key
+function isAuthenticated(req, res, next) {
+    try {
+        const token = req.headers.authorization;
+        const decode = jsonwebtoken_1.default.verify(token, private_key);
+        req.body.user = decode;
+        next();
+    }
+    catch (error) {
+        res.sendStatus(401); // TODO: redirect to login
+    }
+}
 router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { cpf, password } = req.body;
     const user = yield db_1.Users.get(cpf);
@@ -23,7 +37,9 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(409).json({ error: "CPF ou Senha invalida." });
         return;
     }
-    // TODO: save session and redirect to inicial page
+    // TODO: redirect to inicial page
+    const token = jsonwebtoken_1.default.sign({ id: user.id }, private_key);
+    res.status(200).send({ token });
 }));
 router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { cpf, name, email, password, phone_number } = req.body;
@@ -35,6 +51,8 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
     const salt = bcrypt_1.default.genSaltSync(10);
     const hash = bcrypt_1.default.hashSync(password, salt);
     const id = yield db_1.Users.add(cpf, name, email, hash, phone_number);
-    // TODO: save session and redirect to inicial page
+    // TODO: redirect to inicial page
+    const token = jsonwebtoken_1.default.sign({ id }, private_key);
+    res.status(200).send({ token });
 }));
 exports.default = router;

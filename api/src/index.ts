@@ -1,7 +1,7 @@
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import { setup_db } from "./db";
-import login_routes from "./AuthController";
+import login_routes, { isAuthenticated } from "./AuthController";
 import images_routes from "./images";
 import cars from "./cars";
 

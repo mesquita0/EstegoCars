@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { pool, Cars } from './db';
 import { RowDataPacket } from "mysql2";
+import { isAuthenticated } from "./AuthController";
 
 const cars = express.Router();
 const router = express.Router();
@@ -66,7 +67,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const { user_id, brand, model, year, items } = req.body;
 

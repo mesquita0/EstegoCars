@@ -59,15 +59,6 @@ function setup_db() {
           PRIMARY KEY (id)
         ) ENGINE=INNODB;
       `);
-            yield pool.query(` CREATE TABLE IF NOT EXISTS cars_images (
-        car_id int NOT NULL,
-        image_url VARCHAR(2048) NOT NULL,
-
-        FOREIGN KEY (car_id)
-          REFERENCES cars(id)
-          ON DELETE CASCADE
-        ) ENGINE=INNODB;
-      `);
             yield pool.query(` CREATE TABLE IF NOT EXISTS cars_items (
           car_id int NOT NULL,
           item_id int NOT NULL,
@@ -78,6 +69,15 @@ function setup_db() {
           FOREIGN KEY (car_id)
             REFERENCES cars(id)
             ON DELETE CASCADE
+        ) ENGINE=INNODB;
+      `);
+            yield pool.query(` CREATE TABLE IF NOT EXISTS cars_images (
+        car_id int NOT NULL,
+        image_url VARCHAR(2048) NOT NULL,
+
+        FOREIGN KEY (car_id)
+          REFERENCES cars(id)
+          ON DELETE CASCADE
         ) ENGINE=INNODB;
       `);
             console.log("Successfully connected to MySQL.");

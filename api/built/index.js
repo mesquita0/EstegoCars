@@ -16,11 +16,13 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const db_1 = require("./db");
 const AuthController_1 = __importDefault(require("./AuthController"));
+const images_1 = __importDefault(require("./images"));
 const api_1 = __importDefault(require("./api"));
 const app = (0, express_1.default)();
 const port = process.argv[3];
 app.use(body_parser_1.default.json());
 app.use('/api', AuthController_1.default);
+app.use('/api', images_1.default);
 app.use('/api', api_1.default);
 app.use((req, res) => {
     res.status(404).json({ error: "Not found" });

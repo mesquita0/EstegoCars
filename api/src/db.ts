@@ -53,18 +53,6 @@ async function setup_db(): Promise<void> {
     );
 
     await pool.query(
-      ` CREATE TABLE IF NOT EXISTS cars_images (
-        car_id int NOT NULL,
-        image_url VARCHAR(2048) NOT NULL,
-
-        FOREIGN KEY (car_id)
-          REFERENCES cars(id)
-          ON DELETE CASCADE
-        ) ENGINE=INNODB;
-      `
-    );
-
-    await pool.query(
       ` CREATE TABLE IF NOT EXISTS cars_items (
           car_id int NOT NULL,
           item_id int NOT NULL,
@@ -75,6 +63,18 @@ async function setup_db(): Promise<void> {
           FOREIGN KEY (car_id)
             REFERENCES cars(id)
             ON DELETE CASCADE
+        ) ENGINE=INNODB;
+      `
+    );
+
+    await pool.query(
+      ` CREATE TABLE IF NOT EXISTS cars_images (
+        car_id int NOT NULL,
+        image_url VARCHAR(2048) NOT NULL,
+
+        FOREIGN KEY (car_id)
+          REFERENCES cars(id)
+          ON DELETE CASCADE
         ) ENGINE=INNODB;
       `
     );

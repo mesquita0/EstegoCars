@@ -1,7 +1,8 @@
 import bodyParser from "body-parser";
-import express, { Express, Request, Response, NextFunction } from "express";
+import express, { Request, Response } from "express";
 import { setup_db } from "./db";
 import login_routes from "./AuthController";
+import images_routes from "./images";
 import api from "./api";
 
 const app = express();
@@ -10,10 +11,10 @@ const port = process.argv[3];
 app.use(bodyParser.json());
 
 app.use('/api', login_routes);
-
+app.use('/api', images_routes);
 app.use('/api', api);
 
-app.use((req, res) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({error: "Not found"});
 });
 

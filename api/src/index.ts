@@ -3,7 +3,7 @@ import express, { Request, Response } from "express";
 import { setup_db } from "./db";
 import login_routes from "./AuthController";
 import images_routes from "./images";
-import api from "./api";
+import cars from "./cars";
 
 const app = express();
 const port = process.argv[3];
@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use('/api', login_routes);
 app.use('/api', images_routes);
-app.use('/api', api);
+app.use('/api', cars);
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({error: "Not found"});

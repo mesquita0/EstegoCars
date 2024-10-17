@@ -18,7 +18,7 @@ router.get('/', async (req: Request, res: Response) => {
   
     // Query for getting how many vehicles are in the db according to request
     let query_select = "SELECT COUNT(*) AS count FROM vehicles WHERE id > 0 ";
-    let data_select = [];
+    let data_select: (string | number)[] = [];
   
     // Add to query only params that are not undefined
     if (brand !== undefined) {
@@ -31,7 +31,7 @@ router.get('/', async (req: Request, res: Response) => {
     }
     if (year !== undefined) {
       query_select += "AND year >= (?) ";
-      data_select.push(year);
+      data_select.push(Number(year));
     }
   
     const count: number = (await pool.query<RowDataPacket[]>(query_select, data_select))[0][0].count;
@@ -47,11 +47,16 @@ router.get('/', async (req: Request, res: Response) => {
     data_select.push(limit, (page - 1) * limit);
   
     const data = (await pool.query<RowDataPacket[]>(query_select, data_select))[0];
-  
-    const data_with_items = await Promise.all(data.map(async (vehicle) => {
+    const vehicles = data.map((vehicle) => new Vehicle(vehicle));
+
+    const result = await Promise.all(vehicles.map(async (vehicle) => {
       return {
-        ...vehicle, 
-        items: await Vehicles.get_items(vehicle.id), 
+        id: vehicle.id,
+        name: vehicle.brand + " " + vehicle.model,
+        engine: vehicle.engine,
+        price: vehicle.price,
+        year: vehicle.year,
+        mileage: vehicle.mileage,
         images: await Vehicles.get_images(vehicle.id)
       };
     }));
@@ -59,7 +64,7 @@ router.get('/', async (req: Request, res: Response) => {
     res.json({ 
       count,
       pages,
-      data: data_with_items
+      data: result
     });
   }
   catch (error) {
@@ -86,18 +91,9 @@ router.post('/', isAuthenticated, async (req: Request, res: Response) => {
       res.status(400).json({error: "year is required"});
       return;
     }
-    if (!items) {
-      res.status(400).json({error: "items are required"});
-      return;
-    }
 
     if (year < 1886 || year > 2025) {
       res.status(400).json({error: "year should be between 1886 and 2025"});
-      return;
-    }
-
-    if (await Vehicles.is_in_database(brand, model, year)) {
-      res.status(409).json({error: "there is already a vehicle with this data"});
       return;
     }
 
@@ -125,10 +121,12 @@ router.get('/:id', async (req: Request, res: Response) => {
     }
   
     const items = await Vehicles.get_items(vehicle.id);
+    const images = await Vehicles.get_images(vehicle.id);
   
     res.json({
       ...vehicle,
-      items
+      items,
+      images
     });
   }
   catch (error) {
@@ -137,8 +135,9 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.patch('/:id', async (req: Request, res: Response) => {
+router.patch('/:id', isAuthenticated, async (req: Request, res: Response) => {
   try {
+    const user_id: number = req.body.user_id;
     const id = Number(req.params.id);
     let { brand, model, year, items } = req.body;
   
@@ -148,7 +147,7 @@ router.patch('/:id', async (req: Request, res: Response) => {
     }
   
     const vehicle = await Vehicles.get(id);
-    if (vehicle === undefined) {
+    if (vehicle === undefined || vehicle.seller_id !== user_id) {
       res.status(404).json({error: "vehicle not found"});
       return;
     }
@@ -157,11 +156,6 @@ router.patch('/:id', async (req: Request, res: Response) => {
     if (!brand) brand = vehicle.brand;
     if (!model) model = vehicle.model;
     if (!year) year = vehicle.year;
-    
-    if (await Vehicles.is_in_database(brand, model, year, id)) {
-      res.status(409).json({error: "there is alredy a vehicle with this data"});
-      return;
-    }
   
     // Update vehicles table
     const query = "UPDATE vehicles SET brand = (?), model = (?), year = (?) WHERE id = (?)";
@@ -185,12 +179,13 @@ router.patch('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.delete('/:id', async (req: Request, res: Response) => { 
+router.delete('/:id', isAuthenticated, async (req: Request, res: Response) => { 
   try {
+    const user_id: number = req.body.user_id;
     const id = Number(req.params.id);
   
     const vehicle = await Vehicles.get(id);
-    if (vehicle === undefined) {
+    if (vehicle === undefined || vehicle.seller_id !== user_id) {
       res.status(404).json({error: "vehicle not found"});
       return;
     }

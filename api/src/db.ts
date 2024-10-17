@@ -113,6 +113,7 @@ class User {
 
 class Vehicle {
   public id: number;
+  public seller_id: number;
   public brand: string;
   public model: string;
   public year: number;
@@ -125,6 +126,7 @@ class Vehicle {
 
   constructor(data: RowDataPacket) {
     this.id = data["id"];
+    this.seller_id = data["seller_id"];
     this.brand = data["brand"];
     this.model = data["model"];
     this.year = data["year"];
@@ -168,9 +170,9 @@ class Users {
     return result.insertId;
   }
 
-  static async get(cpf: string): Promise<User | undefined> {
-    const query = "SELECT * FROM users WHERE cpf = (?)";
-    const result = (await pool.query<RowDataPacket[]>(query, [cpf]))[0];
+  static async get(id: number): Promise<User | undefined> {
+    const query = "SELECT * FROM users WHERE id = (?)";
+    const result = (await pool.query<RowDataPacket[]>(query, [id]))[0];
 
     if (result.length === 0) return undefined;
     return new User(result[0]);
@@ -189,10 +191,9 @@ class Vehicles {
     brand: string, 
     model: string, 
     year: number, 
-    except_id: number = -1
   ): Promise<boolean> {
-    const query = "SELECT * FROM vehicles WHERE brand = (?) AND model = (?) AND year = (?) AND id != (?)";
-    const data = (await pool.query<RowDataPacket[]>(query, [brand, model, year, except_id]))[0];
+    const query = "SELECT * FROM vehicles WHERE brand = (?) AND model = (?) AND year = (?)";
+    const data = (await pool.query<RowDataPacket[]>(query, [brand, model, year]))[0];
   
     return (data.length > 0);
   }

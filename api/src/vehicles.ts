@@ -16,8 +16,8 @@ router.get('/', async (req: Request, res: Response) => {
     let page = Number(req.query.page);
     if (page < 1 || isNaN(page)) page = 1;
   
-    // Query for getting how many cars are in the db according to request
-    let query_select = "SELECT COUNT(*) AS count FROM cars WHERE id > 0 ";
+    // Query for getting how many vehicles are in the db according to request
+    let query_select = "SELECT COUNT(*) AS count FROM vehicles WHERE id > 0 ";
     let data_select = [];
   
     // Add to query only params that are not undefined
@@ -41,18 +41,18 @@ router.get('/', async (req: Request, res: Response) => {
       return;
     }
   
-    // Change query to return first (limit) cars with offset according to page requested
+    // Change query to return first (limit) vehicles with offset according to page requested
     query_select = query_select.replace("SELECT COUNT(*) AS count", "SELECT *");
     query_select += "LIMIT ? OFFSET ?";
     data_select.push(limit, (page - 1) * limit);
   
     const data = (await pool.query<RowDataPacket[]>(query_select, data_select))[0];
   
-    const data_with_items = await Promise.all(data.map(async (car) => {
+    const data_with_items = await Promise.all(data.map(async (vehicle) => {
       return {
-        ...car, 
-        items: await Vehicles.get_items(car.id), 
-        images: await Vehicles.get_images(car.id)
+        ...vehicle, 
+        items: await Vehicles.get_items(vehicle.id), 
+        images: await Vehicles.get_images(vehicle.id)
       };
     }));
   
@@ -97,13 +97,13 @@ router.post('/', isAuthenticated, async (req: Request, res: Response) => {
     }
 
     if (await Vehicles.is_in_database(brand, model, year)) {
-      res.status(409).json({error: "there is already a car with this data"});
+      res.status(409).json({error: "there is already a vehicle with this data"});
       return;
     }
 
     const id = await Vehicles.add(user_id, brand, model, year);
 
-    // Register car's items in the database
+    // Register vehicle's items in the database
     Vehicles.add_items(id, items);
 
     res.status(201).json({ id });
@@ -118,16 +118,16 @@ router.get('/:id', async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
   
-    const car = await Vehicles.get(id);
-    if (car === undefined) {
-      res.status(404).json({error: "car not found"});
+    const vehicle = await Vehicles.get(id);
+    if (vehicle === undefined) {
+      res.status(404).json({error: "vehicle not found"});
       return;
     }
   
-    const items = await Vehicles.get_items(car.id);
+    const items = await Vehicles.get_items(vehicle.id);
   
     res.json({
-      ...car,
+      ...vehicle,
       items
     });
   }
@@ -147,24 +147,24 @@ router.patch('/:id', async (req: Request, res: Response) => {
       return;
     }
   
-    const car = await Vehicles.get(id);
-    if (car === undefined) {
-      res.status(404).json({error: "car not found"});
+    const vehicle = await Vehicles.get(id);
+    if (vehicle === undefined) {
+      res.status(404).json({error: "vehicle not found"});
       return;
     }
   
     // Filter undefined fields
-    if (!brand) brand = car.brand;
-    if (!model) model = car.model;
-    if (!year) year = car.year;
+    if (!brand) brand = vehicle.brand;
+    if (!model) model = vehicle.model;
+    if (!year) year = vehicle.year;
     
     if (await Vehicles.is_in_database(brand, model, year, id)) {
-      res.status(409).json({error: "there is alredy a car with this data"});
+      res.status(409).json({error: "there is alredy a vehicle with this data"});
       return;
     }
   
-    // Update cars table
-    const query = "UPDATE cars SET brand = (?), model = (?), year = (?) WHERE id = (?)";
+    // Update vehicles table
+    const query = "UPDATE vehicles SET brand = (?), model = (?), year = (?) WHERE id = (?)";
     await pool.query(query, [brand, model, year, id]);
   
     // Update items table
@@ -189,9 +189,9 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
   
-    const car = await Vehicles.get(id);
-    if (car === undefined) {
-      res.status(404).json({error: "car not found"});
+    const vehicle = await Vehicles.get(id);
+    if (vehicle === undefined) {
+      res.status(404).json({error: "vehicle not found"});
       return;
     }
   

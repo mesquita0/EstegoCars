@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Users } from "./db";
 
 const router = express.Router();
@@ -9,8 +9,8 @@ const private_key = "dasuhfga"; // TODO: change private key
 function isAuthenticated(req: Request, res: Response, next: NextFunction) {
   try {
     const token = req.headers.authorization!;
-    const decode = jwt.verify(token, private_key);
-    req.body.user_id = decode;
+    const decode = jwt.verify(token, private_key) as JwtPayload;
+    req.body.user_id = decode.id;
     next();
   }
   catch (error) {

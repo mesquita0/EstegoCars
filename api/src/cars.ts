@@ -1,12 +1,9 @@
 import express, { Request, Response } from "express";
-import { pool, Cars } from './db';
+import { pool, Vehicles, Vehicle } from './db';
 import { RowDataPacket } from "mysql2";
 import { isAuthenticated } from "./AuthController";
 
-const cars = express.Router();
 const router = express.Router();
-
-cars.use('/cars', router);
 
 router.get('/', async (req: Request, res: Response) => {
   try {
@@ -52,7 +49,11 @@ router.get('/', async (req: Request, res: Response) => {
     const data = (await pool.query<RowDataPacket[]>(query_select, data_select))[0];
   
     const data_with_items = await Promise.all(data.map(async (car) => {
-      return {...car, items: await Cars.get_items(car.id)};
+      return {
+        ...car, 
+        items: await Vehicles.get_items(car.id), 
+        images: await Vehicles.get_images(car.id)
+      };
     }));
   
     res.json({ 
@@ -69,7 +70,8 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.post('/', isAuthenticated, async (req: Request, res: Response) => {
   try {
-    const { user_id, brand, model, year, items } = req.body;
+    const user_id: number = req.body.user_id;
+    const { brand, model, year, items } = req.body;
 
     // Check that all required items are present in the request
     if (!brand) {
@@ -94,15 +96,15 @@ router.post('/', isAuthenticated, async (req: Request, res: Response) => {
       return;
     }
 
-    if (await Cars.is_in_database(brand, model, year)) {
+    if (await Vehicles.is_in_database(brand, model, year)) {
       res.status(409).json({error: "there is already a car with this data"});
       return;
     }
 
-    const id = await Cars.add(user_id, brand, model, year);
+    const id = await Vehicles.add(user_id, brand, model, year);
 
     // Register car's items in the database
-    Cars.add_items(id, items);
+    Vehicles.add_items(id, items);
 
     res.status(201).json({ id });
   }
@@ -116,13 +118,13 @@ router.get('/:id', async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
   
-    const car = await Cars.get(id);
+    const car = await Vehicles.get(id);
     if (car === undefined) {
       res.status(404).json({error: "car not found"});
       return;
     }
   
-    const items = await Cars.get_items(car.id);
+    const items = await Vehicles.get_items(car.id);
   
     res.json({
       ...car,
@@ -145,7 +147,7 @@ router.patch('/:id', async (req: Request, res: Response) => {
       return;
     }
   
-    const car = await Cars.get(id);
+    const car = await Vehicles.get(id);
     if (car === undefined) {
       res.status(404).json({error: "car not found"});
       return;
@@ -156,7 +158,7 @@ router.patch('/:id', async (req: Request, res: Response) => {
     if (!model) model = car.model;
     if (!year) year = car.year;
     
-    if (await Cars.is_in_database(brand, model, year, id)) {
+    if (await Vehicles.is_in_database(brand, model, year, id)) {
       res.status(409).json({error: "there is alredy a car with this data"});
       return;
     }
@@ -169,10 +171,10 @@ router.patch('/:id', async (req: Request, res: Response) => {
     if (items !== undefined && items.length > 0) {
   
       // Remove previous items
-      await Cars.delete_items(id);
+      await Vehicles.delete_items(id);
   
       // Add new items
-      Cars.add_items(id, items);
+      Vehicles.add_items(id, items);
     }
   
     res.status(204).json();
@@ -187,13 +189,13 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
   
-    const car = await Cars.get(id);
+    const car = await Vehicles.get(id);
     if (car === undefined) {
       res.status(404).json({error: "car not found"});
       return;
     }
   
-    await Cars.delete(id);
+    await Vehicles.delete(id);
   
     res.status(204).json();
   }
@@ -203,4 +205,4 @@ router.delete('/:id', async (req: Request, res: Response) => {
   }
 });
 
-export default cars;
+export default router;

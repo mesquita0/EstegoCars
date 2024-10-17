@@ -3,10 +3,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs";
 
-const images = express.Router();
 const router = express.Router();
-
-images.use('/images', router);
 
 router.get('/:name', (req: Request, res: Response) => {
     // TODO
@@ -22,4 +19,4 @@ router.post('/',
     }
 );
 
-export default images;
+export default router;

@@ -10,7 +10,7 @@ function isAuthenticated(req: Request, res: Response, next: NextFunction) {
   try {
     const token = req.headers.authorization!;
     const decode = jwt.verify(token, private_key);
-    req.body.user = decode;
+    req.body.user_id = decode;
     next();
   }
   catch (error) {

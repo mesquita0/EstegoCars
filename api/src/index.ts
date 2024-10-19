@@ -1,5 +1,5 @@
 import bodyParser from "body-parser";
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import setup_db from "./database/db_connection";
 import images_routes from "./routes/images";
 import vehicles_routes from "./routes/vehicles";
@@ -19,6 +19,11 @@ api.use('/users', users_routes);
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({error: "Not found"});
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  res.status(500).json({"error": "internal server error"});
 });
 
 app.listen(port, async () => {

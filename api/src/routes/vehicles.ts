@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import Vehicle from "../models/Vehicle";
 import Vehicles from "../services/vehiclesService";
 import isAuthenticated from "../middleware/IsAuthenticated";
 
 const router = express.Router();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const vehicle = new Vehicle(req.query);
     const { brand, model, year, price, mileage, engine } = vehicle;
@@ -42,13 +42,12 @@ router.get('/', async (req: Request, res: Response) => {
       data: result
     });
   }
-  catch (error) {
-    console.log(error);
-    res.status(500).json({"error": "internal server error"});
+  catch(err) {
+    next(err);
   }
 });
 
-router.post('/', isAuthenticated, async (req: Request, res: Response) => {
+router.post('/', isAuthenticated, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user_id: number = req.body.user_id;
     const { brand, model, year, price, type, mileage, transmission, fuel_type, engine } = new Vehicle(req.body);
@@ -78,13 +77,12 @@ router.post('/', isAuthenticated, async (req: Request, res: Response) => {
 
     res.status(201).json({ id });
   }
-  catch (error) {
-    console.log(error);
-    res.status(500).json({"error": "internal server error"});
+  catch(err) {
+    next(err);
   }
 });
 
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = Number(req.params.id);
   
@@ -103,13 +101,12 @@ router.get('/:id', async (req: Request, res: Response) => {
       images
     });
   }
-  catch (error) {
-    console.log(error);
-    res.status(500).json({"error": "internal server error"});
+  catch(err) {
+    next(err);
   }
 });
 
-router.patch('/:id', isAuthenticated, async (req: Request, res: Response) => {
+router.patch('/:id', isAuthenticated, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user_id: number = req.body.user_id;
     const id = Number(req.params.id);
@@ -146,13 +143,12 @@ router.patch('/:id', isAuthenticated, async (req: Request, res: Response) => {
   
     res.status(204).json();
   }
-  catch (error) {
-    console.log(error);
-    res.status(500).json({"error": "internal server error"});
+  catch(err) {
+    next(err);
   }
 });
 
-router.delete('/:id', isAuthenticated, async (req: Request, res: Response) => { 
+router.delete('/:id', isAuthenticated, async (req: Request, res: Response, next: NextFunction) => { 
   try {
     const user_id: number = req.body.user_id;
     const id = Number(req.params.id);
@@ -167,9 +163,8 @@ router.delete('/:id', isAuthenticated, async (req: Request, res: Response) => {
   
     res.status(204).json();
   }
-  catch (error) {
-    console.log(error);
-    res.status(500).json({"error": "internal server error"});
+  catch(err) {
+    next(err);
   }
 });
 

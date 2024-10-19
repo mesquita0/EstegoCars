@@ -1,10 +1,9 @@
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
-import { setup_db } from "./db";
-import login_routes from "./AuthController";
-import images_routes from "./images";
-import vehicles from "./vehicles";
-import users from "./users";
+import setup_db from "./database/db_connection";
+import images_routes from "./routes/images";
+import vehicles_routes from "./routes/vehicles";
+import users_routes from "./routes/users";
 
 const app = express();
 const port = process.argv[3];
@@ -14,10 +13,9 @@ app.use(bodyParser.json());
 const api = express.Router();
 app.use('/api', api);
 
-api.use(login_routes);
 api.use('/images', images_routes);
-api.use('/vehicles', vehicles);
-api.use('/users', users);
+api.use('/vehicles', vehicles_routes);
+api.use('/users', users_routes);
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({error: "Not found"});

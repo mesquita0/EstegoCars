@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
-import { Vehicle, Vehicles } from './db';
-import { isAuthenticated } from "./AuthController";
+import Vehicle from "../models/Vehicle";
+import Vehicles from "../services/vehiclesService";
+import isAuthenticated from "../middleware/IsAuthenticated";
 
 const router = express.Router();
 

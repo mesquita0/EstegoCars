@@ -1,83 +1,11 @@
-import mysql, { Pool, ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import fs from "fs";
-import path from "path";
-
-const pool: Pool = mysql.createPool({
-  connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "p3",
-  multipleStatements: true
-});
+import { ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { pool } from "../database/db_connection";
+import Vehicle from "../models/Vehicle";
 
 const MAX_PRICE = 1000000000;
 const MAX_MILEAGE = 2147483647;
 
-async function setup_db(): Promise<void> {
-  try {
-    const generatedScript = fs.readFileSync(path.join(__dirname, '../queries.sql')).toString();
-    
-    await pool.query(generatedScript);
-
-    console.log("Successfully connected to MySQL.");
-  }
-  catch (err) {
-    console.log(err);
-    process.exit(1);
-  }
-}
-
-class User {
-  public id: number;
-  public cpf: string;
-  public name: string;
-  public email: string;
-  public password: string;
-  public phone_number: string;
-
-  constructor(data: any) {
-    this.id = Number(data.id);
-    this.cpf = data.cpf as string;
-    this.name = data.name as string;
-    this.email = data.email as string;
-    this.password = data.password as string;
-    this.phone_number = data.phone_number as string;
-  }
-}
-
-class Vehicle {
-  public id: number;
-  public seller_id: number;
-  public brand: string;
-  public model: string;
-  public name: string;
-  public year: number;
-  public price: number;
-  public type: string;
-  public mileage: number;
-  public transmission: string;
-  public fuel_type: string;
-  public engine: string;
-
-  constructor(data: any) {
-    this.id = Number(data.id);
-    this.seller_id = Number(data.seller_id);
-    this.brand = data.brand as string;
-    this.brand = data.brand as string;
-    this.model = data.model as string;
-    this.name = (data.name === undefined) ? this.brand + ' ' + this.model : data.name as string;
-    this.year = Number(data.year); 
-    this.price = Number(data.price); 
-    this.type = data.type as string;
-    this.mileage = Number(data.mileage);
-    this.transmission = data.transmission as string;
-    this.fuel_type = data.fuel_type as string;
-    this.engine = data.engine as string;
-  }
-}
-
-class Items {
+export class Items {
   static async exists(id: number): Promise<boolean> {
     const query = "SELECT * FROM items WHERE id = (?)";
     const result = (await pool.query<RowDataPacket[]>(query, [id]))[0];
@@ -93,65 +21,7 @@ class Items {
   }
 }
 
-class Users {
-  static async add(
-    cpf: string,
-    name: string,
-    email: string,
-    password: string,
-    phone_number: string
-  ): Promise<number> {
-    const query = "INSERT INTO users (cpf, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)";
-    const result = (await pool.query<ResultSetHeader>(query, [cpf, name, email, password, phone_number]))[0];
-  
-    return result.insertId;
-  }
-
-  static async get(id: number): Promise<User | undefined> {
-    const query = "SELECT * FROM users WHERE id = (?)";
-    const result = (await pool.query<RowDataPacket[]>(query, [id]))[0];
-
-    if (result.length === 0) return undefined;
-    return new User(result[0]);
-  }
-
-  static async get_vehicles(user_id: number): Promise<Vehicle[]> {
-    const query = "SELECT * FROM vehicles WHERE user_id = (?)";
-    const result = (await pool.query<RowDataPacket[]>(query, [user_id]))[0];
-
-    return result.map((vehicle) => new Vehicle(vehicle));
-  }
-
-  static async update(
-    user: User,
-    id: number = user.id,
-    cpf: string = user.cpf,
-    name: string = user.name,
-    email: string = user.email,
-    password: string = user.password,
-    phone_number: string = user.phone_number
-  ): Promise<void> {
-    const query = `
-      UPDATE users SET
-        cpf = (?), 
-        name = (?),
-        email = (?),
-        password = (?),
-        phone_number = (?)
-      WHERE id = (?)
-    `;
-
-    const data = [id, cpf, name, email, password, phone_number];
-    await pool.query(query, data);
-  }
-
-  static async delete(id: number): Promise<void> {
-    const query = "DELETE FROM users WHERE id = (?)";
-    await pool.query(query, [id]);
-  }
-}
-
-class Vehicles {
+export default class Vehicles {
   static async count(
     brand: string | undefined,
     model: string | undefined,
@@ -324,5 +194,3 @@ class Vehicles {
     await pool.query(query, [id]);
   }
 }
-
-export { setup_db, User, Users, Vehicle, Vehicles };

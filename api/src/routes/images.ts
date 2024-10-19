@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs";
-import { isAuthenticated } from "./AuthController";
+import isAuthenticated from "../middleware/IsAuthenticated";
 
 const router = express.Router();
 

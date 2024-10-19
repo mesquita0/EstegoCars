@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* DIALOG */
+
+dialog {
+    border: 2px solid #a1a1a150;
+    box-shadow: 0px 1px 3px #a1a1a150;
+    border-radius: 10px;
+}
+
+/* HEADER */
+
+header {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    margin-left: 40px;
+    display: flex;
+    justify-content: left;
+    align-self: center;
+}
+
+.logo img {
+    width: 120px;
+    display: flex;
+    align-self: center;
+}
+
+.options {
+    display: flex;
+    list-style: none;
+    font-size: 13px;
+    align-items: center;    
+    justify-content: center;
+    height: 100%;
+    padding-left: 60px;
+}
+
+.options p {
+    padding: 0px 8px;
+}
+
+.options .op {
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    transition: border-bottom 0.3s ease;
+}
+
+.options .op:hover {
+    cursor: pointer;
+    padding: 32px 0px;
+    border-bottom: 8px solid #f6302f;
+}
+
+.sell {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 6px #a1a1a150;
+    border: none;   
+}
+
+.sell-name {
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+.sell-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.sell-close {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+}
+
+.sell-close:hover {
+    cursor: pointer;
+}
+
+.connect {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 180px;
+    margin-right: 40px;
+}
+
+.login, .register {
+    border: none;
+    background-color: #f6302f;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: right;
+}
+
+.connect
+.login:hover, .register:hover {
+    cursor: pointer;
+}
+
+.profile {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 6px #a1a1a150;
+    border: none;
+}
+
+.profile-name {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.profile-information {
+    color: #a1a1a1;
+}
+
+.profile-information p {
+    padding: 10px 0px;
+}
+
+.profile-information span {
+    color: #000;
+}
+
+.profile-cars {
+    text-align: center;
+}
+
+.profile-cars a {
+    text-decoration: none;
+    color: #000;
+}
+
+.profile-cars p {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 0px;
+}
+
+.profile-cars .color {
+    color: #f6302f;
+}
+
+.vehicles-advertised {
+    padding: 30px 0px 20px 0px  ;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 40px;
+}
+
+.profile-close, .profile-pdf {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+}
+
+.profile-close:hover {
+    cursor:pointer;
+}

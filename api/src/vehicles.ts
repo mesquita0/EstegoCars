@@ -1,62 +1,36 @@
 import express, { Request, Response } from "express";
-import { pool, Vehicles, Vehicle } from './db';
-import { RowDataPacket } from "mysql2";
+import { Vehicle, Vehicles } from './db';
 import { isAuthenticated } from "./AuthController";
 
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    let { brand, model, year } = req.query;
-
+    const vehicle = new Vehicle(req.query);
+    const { brand, model, year, price, mileage, engine } = vehicle;
+    
     let limit = Number(req.query.limit);
     if (limit < 1 || isNaN(limit)) limit = 5;
     if (limit > 10) limit = 10;
     
     let page = Number(req.query.page);
     if (page < 1 || isNaN(page)) page = 1;
-  
-    // Query for getting how many vehicles are in the db according to request
-    let query_select = "SELECT COUNT(*) AS count FROM vehicles WHERE id > 0 ";
-    let data_select: (string | number)[] = [];
-  
-    // Add to query only params that are not undefined
-    if (brand !== undefined) {
-      query_select += "AND brand LIKE (?) ";
-      data_select.push("%" + brand + "%");
-    }
-    if (model !== undefined) {
-      query_select += "AND model LIKE (?) ";
-      data_select.push("%" + model + "%");
-    }
-    if (year !== undefined) {
-      query_select += "AND year >= (?) ";
-      data_select.push(Number(year));
-    }
-  
-    const count: number = (await pool.query<RowDataPacket[]>(query_select, data_select))[0][0].count;
+
+    const count = await Vehicles.count(brand, model, year, price, mileage, engine);
     const pages = Math.ceil(count/limit);
     if (count === 0) {
       res.status(204).json();
       return;
     }
-  
-    // Change query to return first (limit) vehicles with offset according to page requested
-    query_select = query_select.replace("SELECT COUNT(*) AS count", "SELECT *");
-    query_select += "LIMIT ? OFFSET ?";
-    data_select.push(limit, (page - 1) * limit);
-  
-    const data = (await pool.query<RowDataPacket[]>(query_select, data_select))[0];
-    const vehicles = data.map((vehicle) => new Vehicle(vehicle));
 
+    const vehicles = await Vehicles.list(
+      brand, model, year, price, mileage, engine, limit, (page - 1) * limit
+    );
+    
     const result = await Promise.all(vehicles.map(async (vehicle) => {
+      const { seller_id, ...vehicle_info } = vehicle;
       return {
-        id: vehicle.id,
-        name: vehicle.brand + " " + vehicle.model,
-        engine: vehicle.engine,
-        price: vehicle.price,
-        year: vehicle.year,
-        mileage: vehicle.mileage,
+        ...vehicle_info,
         images: await Vehicles.get_images(vehicle.id)
       };
     }));
@@ -76,20 +50,17 @@ router.get('/', async (req: Request, res: Response) => {
 router.post('/', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const user_id: number = req.body.user_id;
-    const { brand, model, year, items } = req.body;
+    const { brand, model, year, price, type, mileage, transmission, fuel_type, engine } = new Vehicle(req.body);
+    const items: number[] | undefined = req.body.items;
+    const images: string[] | undefined = req.body.images;
 
     // Check that all required items are present in the request
-    if (!brand) {
-      res.status(400).json({error: "brand is required"});
-      return;
-    }
-    if (!model) {
-      res.status(400).json({error: "model is required"});
-      return;
-    }
-    if (!year) {
-      res.status(400).json({error: "year is required"});
-      return;
+    const vehicle_info = [brand, model, year, price, type, mileage, transmission, fuel_type, engine];
+    for (const info of vehicle_info) {
+      if (!info) {
+        res.status(400).json({error: "missing information"});
+        return;
+      } 
     }
 
     if (year < 1886 || year > 2025) {
@@ -97,10 +68,12 @@ router.post('/', isAuthenticated, async (req: Request, res: Response) => {
       return;
     }
 
-    const id = await Vehicles.add(user_id, brand, model, year);
+    const id = await Vehicles.add(
+      user_id, brand, model, year, price, type, mileage, transmission, fuel_type, engine
+    );
 
-    // Register vehicle's items in the database
-    Vehicles.add_items(id, items);
+    if (items !== undefined) Vehicles.add_items(id, items);
+    if (images !== undefined) Vehicles.add_images(id, images);
 
     res.status(201).json({ id });
   }
@@ -139,7 +112,9 @@ router.patch('/:id', isAuthenticated, async (req: Request, res: Response) => {
   try {
     const user_id: number = req.body.user_id;
     const id = Number(req.params.id);
-    let { brand, model, year, items } = req.body;
+    const { brand, model, year, price, type, mileage, transmission, fuel_type, engine } = new Vehicle(req.body);
+    const items: number[] | undefined = req.body.items;
+    const images: string[] | undefined = req.body.images;
   
     if (year < 1886 || year > 2025) {
       res.status(400).json({error: "year should be between 1886 and 2025"});
@@ -151,24 +126,21 @@ router.patch('/:id', isAuthenticated, async (req: Request, res: Response) => {
       res.status(404).json({error: "vehicle not found"});
       return;
     }
-  
-    // Filter undefined fields
-    if (!brand) brand = vehicle.brand;
-    if (!model) model = vehicle.model;
-    if (!year) year = vehicle.year;
-  
-    // Update vehicles table
-    const query = "UPDATE vehicles SET brand = (?), model = (?), year = (?) WHERE id = (?)";
-    await pool.query(query, [brand, model, year, id]);
+    
+    await Vehicles.update(
+      vehicle, vehicle.id, brand, model, year, price, type, mileage, transmission, fuel_type, engine
+    );
   
     // Update items table
     if (items !== undefined && items.length > 0) {
-  
-      // Remove previous items
       await Vehicles.delete_items(id);
-  
-      // Add new items
-      Vehicles.add_items(id, items);
+      await Vehicles.add_items(id, items);
+    }
+
+    // Update images table
+    if (images !== undefined && images.length > 0) {
+      await Vehicles.delete_images(id);
+      await Vehicles.add_images(id, images);
     }
   
     res.status(204).json();

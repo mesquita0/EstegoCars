@@ -51,4 +51,35 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
+router.patch('/', isAuthenticated, async (req: Request, res: Response) => {
+  const user_id: number = req.body.user_id;
+  const { cpf, name, email, password, phone_number } = new User(req.body);
+
+  const user = await Users.get(user_id);
+  if (user === undefined) {
+    res.status(404).json({error: "user not found"});
+    return;
+  }
+
+  await Users.update(
+    user, user_id, cpf, name, email, password, phone_number
+  );
+  
+  res.status(204).json();
+});
+
+router.delete('/', isAuthenticated, async (req: Request, res: Response) => {
+  const user_id: number = req.body.user_id;
+
+  const user = await Users.get(user_id);
+  if (user === undefined) {
+    res.status(404).json({error: "user not found"});
+    return;
+  }
+
+  await Users.delete(user_id);
+
+  res.status(204).json();
+});
+
 export default router;

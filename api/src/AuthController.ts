@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { Users } from "./db";
 
 const router = express.Router();
-const private_key = "dasuhfga"; // TODO: change private key
+const private_key = "5e009c4b88b268e259782a124fe50b669c66a92e";
 
 function isAuthenticated(req: Request, res: Response, next: NextFunction) {
   try {

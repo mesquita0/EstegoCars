@@ -1,0 +1,367 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container__homepage {   
+    /* DIALOG */
+    
+    dialog {
+        border: 2px solid #a1a1a150;
+        box-shadow: 0px 1px 3px #a1a1a150;
+        border-radius: 10px;
+    }
+    
+    /* HEADER */
+    
+    header {
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .logo {
+        margin-left: 40px;
+        display: flex;
+        justify-content: left;
+        align-self: center;
+    }
+    
+    .logo img {
+        width: 120px;
+        display: flex;
+        align-self: center;
+    }
+    
+    .options {
+        display: flex;
+        list-style: none;
+        font-size: 13px;
+        align-items: center;    
+        height: 100%;
+    }
+    
+    .options p {
+        padding: 0px 8px;
+    }
+    
+    .options .op {
+        text-decoration: none;
+        border: none;
+        background-color: transparent;
+        color: #000;
+        transition: border-bottom 0.3s ease;
+    }
+    
+    .options .op:hover {
+        cursor: pointer;
+        padding: 32px 0px;
+        border-bottom: 8px solid #f6302f;
+    }
+    
+    .sell {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 900px;
+        padding: 40px;
+        box-shadow: 0px 0px 10px 6px #a1a1a150;
+        border: none;
+    }
+    
+    .sell-name {
+        padding-bottom: 20px;
+        text-align: center;
+    }
+    
+    .sell-informations {
+        margin: 20px 60px 40px 60px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .sell-informations p {
+        padding: 20px 0px;
+        width: 26%;
+        box-sizing: border-box;
+        font-weight: 700;
+    }
+    
+    .sell-informations label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #a1a1a1;
+        font-size: 14px;
+    }
+    
+    .sell-informations input {
+        padding: 5px;
+        border: 1px solid #a1a1a1;
+        color: #a1a1a150;
+        border-radius: 5px;
+    }
+    
+    .sell-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .sell-save, .sell-close {
+        width: 200px;
+        padding: 8px;
+        border: none;
+        font-weight: bolder;
+        font-size: 16px;
+        border-radius: 6px;
+        background-color: #f6302f;
+        color: #fff;
+    }
+    
+    .sell-save:hover, .sell-close:hover {
+        cursor: pointer;
+    }
+    
+    .account-circle {
+        border: none;
+        background-color: transparent;
+        width: 120px;
+        margin-right: 40px;
+        display: flex;
+        justify-content: right;
+    }
+    
+    .account-circle .material-symbols-outlined {
+        font-size: 40px;
+    }
+    
+    .account-circle
+    span:hover {
+        cursor: pointer;
+    }
+    
+    .profile {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        padding: 40px;
+        box-shadow: 0px 0px 10px 6px #a1a1a150;
+        border: none;
+    }
+    
+    .profile-name {
+        padding-bottom: 20px;
+        text-align: center;
+    }
+    
+    .profile-information {
+        color: #a1a1a1;
+    }
+    
+    .profile-information p {
+        padding: 10px 0px;
+    }
+    
+    .profile-information span {
+        color: #000;
+    }
+    
+    .profile-cars {
+        text-align: center;
+    }
+    
+    .profile-cars a {
+        text-decoration: none;
+        color: #000;
+    }
+    
+    .profile-cars p {
+        font-size: 15px;
+        font-weight: 600;
+        padding: 10px 0px;
+    }
+    
+    .profile-cars .color {
+        color: #f6302f;
+    }
+    
+    .vehicles-advertised {
+        padding: 30px 0px 20px 0px  ;
+    }
+    
+    .profile-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding-top: 40px;
+    }
+    
+    .profile-close, .profile-pdf {
+        width: 200px;
+        padding: 8px;
+        border: none;
+        font-weight: bolder;
+        font-size: 16px;
+        border-radius: 6px;
+        background-color: #f6302f;
+        color: #fff;
+    }
+    
+    .profile-close:hover {
+        cursor:pointer;
+    }
+    
+    /* TARJA PRETA */
+    
+    .container {
+        background-color: #f6302f;
+        height: auto;   
+        padding: 60px 0px 60px 0px;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0px 0px 10px 6px #a1a1a150;
+    }
+    
+    .search-bar {
+        background-color: #fff;
+        height: 44px;
+        width: 600px;
+        display: flex;
+        border: 1px solid #889d95ad;
+        border-radius: 30px;
+    }
+    
+    .search-bar .search {
+        width: 100%;
+        height: 44px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        color: #6d6d6d;
+    }
+    
+    .search-icon {
+        display: flex;
+        margin: 0px 10px 0px 10px;
+    }
+    
+    .search-icon button {
+        border: none;
+        background-color: transparent;
+    }
+    
+    .search-icon span:hover {
+        cursor: pointer;
+        color: #6d6d6d;
+    }
+    
+    /* MAIN */
+    
+    .car-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+    
+    .filter-selector {
+        width: 300px;
+        background-color: #ecedf2;
+        padding: 40px;
+    }
+    
+    .filter-selector
+    .year, .value, .km {
+        padding: 10px 0px;
+    }
+    
+    .filter-selector p {
+        padding: 5px 0px;
+    }
+    
+    .filter-selector input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 4px 4px 8px 0px #a1a1a150;
+    }
+    
+    .car-box {
+        width: 254px;
+        height: 400px;
+        border: 2px solid #a1a1a150;
+        box-shadow: 0px 1px 3px #a1a1a150;
+        border-radius: 20px;
+        margin-top: 40px;
+    }
+    
+    .car-image {
+        width: 250px;
+        height: 175px;
+        overflow: hidden;
+    }
+    
+    .car-image img {
+        width: 250px;
+        height: 175px;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        object-fit: cover; 
+    }
+    
+    .car-name {
+        color: #000;
+        padding: 10px 0;
+        font-size: 22px;
+        padding: 8px 16px;
+    }
+    
+    .car-description {
+        color: #a1a1a1;
+        padding: 8px 16px;
+    }
+}
+
+/* fallback */
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: 100 700;
+    src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v213/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2) format('woff2');
+  }
+  
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }    

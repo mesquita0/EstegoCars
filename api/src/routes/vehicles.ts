@@ -20,7 +20,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const count = await Vehicles.count(brand, model, year, price, mileage, engine);
     const pages = Math.ceil(count/limit);
     if (count === 0) {
-      res.status(204).json();
+      res.json({ 
+        count,
+        pages,
+        data: []
+      });
       return;
     }
 

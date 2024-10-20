@@ -5,6 +5,7 @@ import Header from "../components/Header";
 
 export const CarPage = () => {
   const [data, setData] = useState({images: [], seller: {}});
+  const [img_fs, SetImgFs] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export const CarPage = () => {
           <section>
             <div class="carousel-container" id="carouselContainer">
             {data.images.map((image) => (
-              <img src={image} alt="Carro 1" class="carousel-image" />  
+              <img src={image} alt="Carro 1" onClick={() => SetImgFs(image)} class="carousel-image" />  
             ))}
             </div>
             <div class="navigation-buttons">
@@ -43,9 +44,9 @@ export const CarPage = () => {
               <button id="nextBtn">&#10095;</button>
             </div>
 
-            <div class="fullscreen-img" id="fullscreenImg">
-              <span class="close" id="closeFullscreen">&times;</span>
-              <img id="fullscreenImage" src="" alt="Fullscreen Image" />
+            <div class="fullscreen-img" id="fullscreenImg" style={img_fs ? {display: 'flex'} : {}}>
+              <span class="close" id="closeFullscreen" onClick={() => SetImgFs("")}>&times;</span>
+              <img id="fullscreenImage" scr={img_fs}/>
             </div>
           </section>
           <section class="car-information">

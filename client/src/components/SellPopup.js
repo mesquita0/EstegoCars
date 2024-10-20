@@ -1,4 +1,49 @@
+import React, { useState, useEffect } from 'react';
+
+const sendListing = (
+  jwt,
+  brand,
+  model,
+  price,
+  year,
+  type,
+  mileage,
+  transmission,
+  fuel_type,
+  engine
+) => {
+  console.log(brand)
+  fetch("/api/vehicles/", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': jwt
+    },
+    body: JSON.stringify({
+      brand,
+      model,
+      year,
+      price,
+      type,
+      mileage,
+      transmission,
+      fuel_type,
+      engine
+    })
+  }).then((res) => console.log(res));
+} 
+
 export default ({ JWT }) => {
+  const [brand, SetBrand] = useState("");
+  const [model, SetModel] = useState("");
+  const [price, SetPrice] = useState("");
+  const [year, SetYear] = useState("");
+  const [type, SetType] = useState("");
+  const [mileage, SetMileage] = useState("");
+  const [transmission, SetTransmission] = useState("");
+  const [fuel_type, SetFuelType] = useState("");
+  const [engine, SetEngine] = useState("");
+
   return(
     <>
       <div style={{ paddingBottom: "20px", textAlign: "center" }}>
@@ -19,7 +64,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Marca</label>
-          <input type="text" name="marca" id="marca" required placeholder="Ex: Ford" style={{
+          <input type="text" value={brand} onChange={evt => SetBrand(evt.target.value)} name="marca" id="marca" required placeholder="Ex: Ford" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -35,7 +80,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Modelo</label>
-          <input type="text" name="modelo" id="modelo" required placeholder="Ex: Focus" style={{
+          <input type="text" value={model} onChange={evt => SetModel(evt.target.value)} name="modelo" id="modelo" required placeholder="Ex: Focus" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -51,7 +96,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Preço (R$)</label>
-          <input type="number" name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000" style={{
+          <input type="number" value={price} onChange={evt => SetPrice(evt.target.value)} name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -67,7 +112,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Ano</label>
-          <input type="number" name="ano" id="ano" min="1886" required placeholder="Ex: 2023" style={{
+          <input type="number" value={year} onChange={evt => SetYear(evt.target.value)} name="ano" id="ano" min="1886" required placeholder="Ex: 2023" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -83,7 +128,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Tipo</label>
-          <input type="text" name="tipo" id="tipo" required placeholder="Ex: Carro" style={{
+          <input type="text" value={type} onChange={evt => SetType(evt.target.value)} name="tipo" id="tipo" required placeholder="Ex: Carro" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -99,7 +144,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Quilometragem</label>
-          <input type="number" name="km" id="km" required placeholder="Ex: 50.000" style={{
+          <input type="number" value={mileage} onChange={evt => SetMileage(evt.target.value)} name="km" id="km" required placeholder="Ex: 50.000" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -115,7 +160,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Câmbio</label>
-          <input type="text" name="cambio" id="cambio" required placeholder="Ex: Manual" style={{
+          <input type="text" value={transmission} onChange={evt => SetTransmission(evt.target.value)} name="cambio" id="cambio" required placeholder="Ex: Manual" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -131,7 +176,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Combustível</label>
-          <input type="text" name="combustivel" id="combustivel" required placeholder="Ex: Flex" style={{
+          <input type="text" value={fuel_type} onChange={evt => SetFuelType(evt.target.value)} name="combustivel" id="combustivel" required placeholder="Ex: Flex" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -147,7 +192,7 @@ export default ({ JWT }) => {
             color: "#a1a1a1",
             fontSize: "14px"
           }}>Motor</label>
-          <input type="text" name="motor" id="motor" required placeholder="Ex: 2.0" style={{
+          <input type="text" value={engine} onChange={evt => SetEngine(evt.target.value)} name="motor" id="motor" required placeholder="Ex: 2.0" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
             color: "#a1a1a150",
@@ -157,7 +202,7 @@ export default ({ JWT }) => {
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-        <button style={{
+        <button onClick={() => sendListing(JWT, brand, model, price, year, type, mileage, transmission, fuel_type, engine)} style={{
           width: "200px",
           padding: "8px",
           border: "none",

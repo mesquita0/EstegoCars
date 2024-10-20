@@ -10,9 +10,12 @@ const Header = () => {
   const [jwt, SetJWTState] = useState(false);
 
   useEffect(() => {
-    setJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5MzAyNzAyfQ.rPB17mWS1ynSvGyjcSa2-b8QJBV4XEtvyjBgJwPII9o");
     SetJWTState(getJWT());
   }, [jwt]);
+
+  const updateJWT = () => {
+    SetJWTState(getJWT());
+  }
 
   return (
     <>
@@ -45,7 +48,7 @@ const Header = () => {
                   }}
                   overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
                 >
-                  {jwt ? <SellPopup JWT={jwt} /> : <LoginPopup />}
+                  {jwt ? <SellPopup JWT={jwt} /> : <LoginPopup updateJWT={updateJWT} />}
                 </Popup>
                 <button class="op">
                   <p>Suporte</p>
@@ -69,7 +72,7 @@ const Header = () => {
               }}
               overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
             >
-              {jwt ? <ProfilePopup JWT={jwt} /> : <LoginPopup />}
+              {jwt ? <ProfilePopup JWT={jwt} /> : <LoginPopup updateJWT={updateJWT} />}
             </Popup>
           </nav>
         </header>

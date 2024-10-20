@@ -1,5 +1,5 @@
 {
-  "name": "compass_car",
+  "name": "stego_cars",
   "version": "1.0.0",
   "description": "API para cadastro de veículos para a locação.",
   "main": "index.js",

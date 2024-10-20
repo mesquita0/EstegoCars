@@ -12,7 +12,6 @@ const sendListing = (
   fuel_type,
   engine
 ) => {
-  console.log(brand)
   fetch("/api/vehicles/", {
     method: "POST",
     headers: {
@@ -30,7 +29,7 @@ const sendListing = (
       fuel_type,
       engine
     })
-  }).then((res) => console.log(res));
+  });
 } 
 
 export default ({ JWT }) => {

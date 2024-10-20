@@ -18,7 +18,6 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
       return;
     }
 
-    // TODO: redirect to inicial page
     const token = generateToken(user.id);
     res.status(200).send({ token });
   }
@@ -52,7 +51,6 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
 
     const id = await Users.add(cpf, name, email, hash, phone_number);
 
-    // TODO: redirect to inicial page
     const token = generateToken(id);
     res.status(200).send({ token });
   }

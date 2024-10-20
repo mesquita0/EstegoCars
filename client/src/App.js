@@ -4,15 +4,6 @@ import { HomePage } from "./pages/Home.js";
 import { CarPage } from "./pages/CarPage";
 
 function App() {
-  const [message, setMessage] = useState('');
-  useEffect(() => {
-    fetch('/api/cars/')
-      .then((res) => res.text())
-      .then((data) => setMessage(data))
-      .catch((err) => console.log(err));
-  }, []);
-
-
   return (
     <Router>
       <Routes>

@@ -1,17 +1,18 @@
 import Popup from 'reactjs-popup';
 import logo from '../logo-stego.png';
-import { hasJWT } from '../helpers/jwt';
+import { getJWT, setJWT } from '../helpers/jwt';
 import SellPopup from "../components/SellPopup";
 import ProfilePopup from './ProfilePopup';
 import LoginPopup from './LoginPopup';
 import React, { useState, useEffect } from 'react';
 
 const Header = () => {
-  const [isLoggedIn, SetLoggedIn] = useState(false);
+  const [jwt, SetJWTState] = useState(false);
 
   useEffect(() => {
-    SetLoggedIn(hasJWT());
-  }, [isLoggedIn]);
+    setJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzI5MzAyNzAyfQ.rPB17mWS1ynSvGyjcSa2-b8QJBV4XEtvyjBgJwPII9o");
+    SetJWTState(getJWT());
+  }, [jwt]);
 
   return (
     <>
@@ -44,7 +45,7 @@ const Header = () => {
                   }}
                   overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
                 >
-                  {isLoggedIn ? <SellPopup /> : <LoginPopup />}
+                  {jwt ? <SellPopup JWT={jwt} /> : <LoginPopup />}
                 </Popup>
                 <button class="op">
                   <p>Suporte</p>
@@ -68,7 +69,7 @@ const Header = () => {
               }}
               overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
             >
-              {isLoggedIn ? <ProfilePopup /> : <LoginPopup />}
+              {jwt ? <ProfilePopup JWT={jwt} /> : <LoginPopup />}
             </Popup>
           </nav>
         </header>

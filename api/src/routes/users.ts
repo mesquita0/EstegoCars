@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/User";
 import Users from "../services/usersService";
+import Vehicles from "../services/vehiclesService";
 import isAuthenticated from "../middleware/IsAuthenticated";
 import { generateToken } from "../services/authService";
 
@@ -76,6 +77,28 @@ router.get('/info', isAuthenticated, async (req: Request, res: Response, next: N
       cpf: user.cpf,
       email: user.email,
       phone_number: user.phone_number
+    });
+  }
+  catch (err) {
+    next(err);
+  }
+});
+
+router.get('/vehicles', isAuthenticated, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user_id: number = req.body.user_id;
+    const vehicles = await Users.get_vehicles(user_id);
+
+    const user_vehicles = await Promise.all(vehicles.map(async (vehicle) => {
+      const { seller_id, ...vehicle_info } = vehicle;
+      return {
+        ...vehicle_info,
+        images: await Vehicles.get_images(vehicle.id)
+      };
+    }));
+
+    res.json({ 
+      vehicles: user_vehicles
     });
   }
   catch (err) {

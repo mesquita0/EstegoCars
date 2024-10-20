@@ -1,4 +1,4 @@
-export default () => {
+export default ({ JWT }) => {
   return(
     <>
       <div style={{ paddingBottom: "20px", textAlign: "center" }}>

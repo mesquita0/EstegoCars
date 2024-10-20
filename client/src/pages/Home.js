@@ -15,7 +15,6 @@ export const HomePage = () => {
         const response = await fetch(
           `/api/vehicles/?brand=${search}&year=${year}&price=${price}&mileage=${mileage}`
         );
-        console.log(`/api/vehicles/?brand=${search}&year=${year}&price=${price}&mileage=${mileage}`)
         const result = await response.json();
         setData(result.data);
       } catch (error) {

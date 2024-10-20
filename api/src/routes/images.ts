@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/:name', (req: Request, res: Response, next: NextFunction) => {
   try {
     // TODO
-    res.sendFile(path.join(__dirname, "../images/", req.params.name));
+    res.sendFile(path.join(__dirname, "..", "../images/", req.params.name));
   }
   catch(err) {
     next(err);

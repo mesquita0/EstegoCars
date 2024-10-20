@@ -22,6 +22,9 @@ export default (props) => {
         setJWT(result.token);
         props.updateJWT();
       }
+      else if (email && password) {
+        alert("email ou senha incorretos");
+      }
     } 
 
     login(email, password);

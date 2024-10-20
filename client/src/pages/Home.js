@@ -31,9 +31,11 @@ export const HomePage = () => {
             </div>
 
             <div class="options">
+              <a href="/">
               <button class="op">
                 <p>Comprar</p>
               </button>
+              </a>
 
               <Popup
                 trigger={<button class="op sell-button"><p>Vender</p></button>}
@@ -320,11 +322,10 @@ export const HomePage = () => {
               </div>
             </div>
             {data.map((item) => (
+              <a href={"/car/" + item.id} target="_self">
               <div class="car-box">
                 <div class="car-image">
-                  <a href="car-page.html" target="_blank">
-                    <img src={"http://localhost:5000/api/images/" + item.images[0]} alt="" />
-                  </a>
+                    <img src={item.images[0]} alt="" />
                 </div>
                 <div class="car-name">
                   {item.name}
@@ -337,6 +338,7 @@ export const HomePage = () => {
                   <img src="" alt="" />
                 </div>
               </div>
+              </a>
             ))}
           </section>
         </main>

@@ -37,9 +37,11 @@ export const CarPage = () => {
             </div>
 
               <div class="options">
+                <a href="/">
                 <button class="op">
                   <p>Comprar</p>
                 </button>
+                </a>
                 <Popup
                   trigger={<button class="op sell-button"><p>Vender</p></button>}
                   modal

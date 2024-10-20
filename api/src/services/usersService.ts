@@ -42,7 +42,7 @@ export default class Users {
   }
 
   static async get_vehicles(user_id: number): Promise<Vehicle[]> {
-    const query = "SELECT * FROM vehicles WHERE user_id = (?)";
+    const query = "SELECT * FROM vehicles WHERE seller_id = (?)";
     const result = (await pool.query<RowDataPacket[]>(query, [user_id]))[0];
 
     return result.map((vehicle) => new Vehicle(vehicle));

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { removeJWT } from '../helpers/jwt';
 
 const downloadPDF = async (jwt) => {
   fetch(
@@ -14,7 +15,7 @@ const downloadPDF = async (jwt) => {
   });
 }
 
-export default ({ JWT }) => {
+export default ({ JWT, updateJWT }) => {
   const [profile_info, SetProfileInfo] = useState(false);
   const [user_vehicles, SetUserVehicles] = useState([]);
   
@@ -92,6 +93,7 @@ export default ({ JWT }) => {
           color: "#fff",
           cursor: "pointer"
         }}>Gerar PDF</button>
+        <button name='logout-button' onClick={() => {removeJWT(); updateJWT();}}></button> 
       </div>
     </>
   );

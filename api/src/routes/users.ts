@@ -29,9 +29,9 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { cpf, name, email, password, phone_number } = req.body;
+    const { CPF, name, email, password, phone_number } = req.body;
 
-    if (await Users.getByCPF(cpf)) {
+    if (await Users.getByCPF(CPF)) {
       res.status(409).json({error: "Esse CPF já está em uso."});
       return;
     }
@@ -50,7 +50,7 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const id = await Users.add(cpf, name, email, hash, phone_number);
+    const id = await Users.add(CPF, name, email, hash, phone_number);
 
     const token = generateToken(id);
     res.status(200).send({ token });

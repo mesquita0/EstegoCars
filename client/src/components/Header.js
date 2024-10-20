@@ -1,10 +1,11 @@
 import Popup from 'reactjs-popup';
 import logo from '../logo-stego.png';
-import { getJWT, setJWT } from '../helpers/jwt';
+import { getJWT } from '../helpers/jwt';
 import SellPopup from "../components/SellPopup";
 import ProfilePopup from './ProfilePopup';
 import LoginPopup from './LoginPopup';
 import React, { useState, useEffect } from 'react';
+import RegisterPopup from './RegisterPopup';
 
 const Header = () => {
   const [jwt, SetJWTState] = useState(false);
@@ -48,13 +49,13 @@ const Header = () => {
                   }}
                   overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
                 >
-                  {jwt ? <SellPopup JWT={jwt} /> : <LoginPopup updateJWT={updateJWT} />}
+                  {jwt ? <SellPopup updateJWT={updateJWT} JWT={jwt} /> : <LoginPopup updateJWT={updateJWT} />}
                 </Popup>
                 <button class="op">
                   <p>Suporte</p>
                 </button>
               </div>
-
+            { jwt ? 
             <Popup
               trigger={<button class="account-circle"><span class="material-symbols-outlined">account_circle</span></button>}
               modal
@@ -72,8 +73,14 @@ const Header = () => {
               }}
               overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
             >
-              {jwt ? <ProfilePopup JWT={jwt} /> : <LoginPopup updateJWT={updateJWT} />}
+              <ProfilePopup updateJWT={updateJWT} JWT={jwt} />
             </Popup>
+            :
+            <div class="connect">
+              <Popup trigger={<button class="login">Entrar</button>}><LoginPopup updateJWT={updateJWT} /></Popup>
+              <Popup trigger={<button class="register">Criar Conta</button>}><RegisterPopup updateJWT={updateJWT}></RegisterPopup></Popup>
+            </div>
+            }
           </nav>
         </header>
     </>

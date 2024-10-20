@@ -285,6 +285,7 @@
     
     .filter-selector {
         width: 300px;
+        height: 100vh;
         background-color: #ecedf2;
         padding: 40px;
     }

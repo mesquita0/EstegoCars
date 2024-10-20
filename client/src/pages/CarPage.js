@@ -21,47 +21,203 @@ export class CarPage extends Component {
                 <button class="op">
                   <p>Comprar</p>
                 </button>
-                <button class="op sell-button">
-                  <p>Vender</p>
-                </button>
-                <dialog class="sell">
-                  <div class="sell-name">
+                <Popup
+                  trigger={<button class="op sell-button"><p>Vender</p></button>}
+                  modal
+                  contentStyle={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "900px",
+                    padding: "40px",
+                    boxShadow: "0px 0px 10px 6px #a1a1a150",
+                    border: "none",
+                    backgroundColor: "#fff",
+                    borderRadius: "10px"
+                  }}
+                  overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
+                >
+                  <div style={{ paddingBottom: "20px", textAlign: "center" }}>
                     <h1>Dados do Veículo</h1>
                   </div>
-                  <div class="sell-informations">
-                    <p><label for="marca">Marca</label>
-                      <input type="text" name="marca" id="marca" required placeholder="Ex: Ford" /></p>
 
-                    <p><label for="modelo">Modelo</label>
-                      <input type="text" name="modelo" id="modelo" required placeholder="Ex: Ford" /></p>
+                  <div style={{
+                    margin: "20px 60px 40px 60px",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between"
+                  }}>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="marca" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Marca</label>
+                      <input type="text" name="marca" id="marca" required placeholder="Ex: Ford" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="preco">Preço (R$)</label>
-                      <input type="number" name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="modelo" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Modelo</label>
+                      <input type="text" name="modelo" id="modelo" required placeholder="Ex: Focus" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="ano">Ano</label>
-                      <input type="number" name="ano" id="ano" min="1886" required placeholder="Ex: 2023" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="preco" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Preço (R$)</label>
+                      <input type="number" name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="tipo">Tipo</label>
-                      <input type="text" name="tipo" id="tipo" required placeholder="Ex: Carro" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="ano" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Ano</label>
+                      <input type="number" name="ano" id="ano" min="1886" required placeholder="Ex: 2023" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="km">Quilometragem</label>
-                      <input type="number" name="km" id="km" required placeholder="Ex: 50.000" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="tipo" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Tipo</label>
+                      <input type="text" name="tipo" id="tipo" required placeholder="Ex: Carro" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="cambio">Câmbio</label>
-                      <input type="text" name="cambio" id="cambio" required placeholder="Ex: Manual" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="km" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Quilometragem</label>
+                      <input type="number" name="km" id="km" required placeholder="Ex: 50.000" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="combustivel">Combustível</label>
-                      <input type="text" name="combustivel" id="combustivel" required placeholder="Ex: Flex" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="cambio" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Câmbio</label>
+                      <input type="text" name="cambio" id="cambio" required placeholder="Ex: Manual" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
-                    <p><label for="motor">Motor</label>
-                      <input type="text" name="motor" id="motor" required placeholder="Ex: 2.0" /></p>
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="combustivel" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Combustível</label>
+                      <input type="text" name="combustivel" id="combustivel" required placeholder="Ex: Flex" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
 
+                    <p style={{ padding: "20px 0px", width: "26%", boxSizing: "border-box", fontWeight: "700" }}>
+                      <label htmlFor="motor" style={{
+                        display: "block",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                        color: "#a1a1a1",
+                        fontSize: "14px"
+                      }}>Motor</label>
+                      <input type="text" name="motor" id="motor" required placeholder="Ex: 2.0" style={{
+                        padding: "5px",
+                        border: "1px solid #a1a1a1",
+                        color: "#a1a1a150",
+                        borderRadius: "5px"
+                      }} />
+                    </p>
                   </div>
-                  <div class="sell-buttons">
-                    <button class="sell-save">Anunciar</button>
-                    <button class="sell-close">Cancelar</button>
+
+                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
+                    <button style={{
+                      width: "200px",
+                      padding: "8px",
+                      border: "none",
+                      fontWeight: "bolder",
+                      fontSize: "16px",
+                      borderRadius: "6px",
+                      backgroundColor: "#f6302f",
+                      color: "#fff",
+                      cursor: "pointer"
+                    }}>Anunciar</button>
+                    <button style={{
+                      width: "200px",
+                      padding: "8px",
+                      border: "none",
+                      fontWeight: "bolder",
+                      fontSize: "16px",
+                      borderRadius: "6px",
+                      backgroundColor: "#f6302f",
+                      color: "#fff",
+                      cursor: "pointer"
+                    }}>Cancelar</button>
                   </div>
-                </dialog>
+                </Popup>
                 <button class="op">
                   <p>Suporte</p>
                 </button>

@@ -1,5 +1,5 @@
 import "../style-car-page.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from "../components/Header";
 
@@ -7,6 +7,8 @@ export const CarPage = () => {
   const [data, setData] = useState({images: [], seller: {}});
   const [img_fs, SetImgFs] = useState("");
   const { id } = useParams();
+  const sliderRef = useRef(null);
+  const scrollAmount = 100;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,14 +36,24 @@ export const CarPage = () => {
 
         <main>
           <section>
-            <div class="carousel-container" id="carouselContainer">
-            {data.images.map((image) => (
-              <img src={image} alt="Carro 1" onClick={() => SetImgFs(image)} class="carousel-image" />  
-            ))}
-            </div>
+              <div class="carousel-container" id="carouselContainer" ref={sliderRef}>
+                {data.images.map((image) => (
+                  <img src={image} alt="sliderImage" onClick={() => SetImgFs(image)} class="carousel-image" />  
+                ))}
+              </div>
             <div class="navigation-buttons">
-              <button id="prevBtn">&#10094;</button>
-              <button id="nextBtn">&#10095;</button>
+              <button id="prevBtn" onClick={() => {
+                  const container = sliderRef.current;
+                  container.scrollLeft += scrollAmount;
+                }}>
+                  &#10094;
+              </button>
+              <button id="nextBtn" onClick={() => {
+                  const container = sliderRef.current;
+                  container.scrollLeft -= scrollAmount;
+                }}>
+                  &#10095;
+              </button>
             </div>
 
             <div class="fullscreen-img" id="fullscreenImg" style={img_fs ? {display: 'flex'} : {}}>

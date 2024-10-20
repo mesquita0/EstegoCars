@@ -32,16 +32,16 @@ const sendListing = (
   });
 } 
 
-export default ({ JWT }) => {
-  const [brand, SetBrand] = useState("");
-  const [model, SetModel] = useState("");
-  const [price, SetPrice] = useState("");
-  const [year, SetYear] = useState("");
-  const [type, SetType] = useState("");
-  const [mileage, SetMileage] = useState("");
-  const [transmission, SetTransmission] = useState("");
-  const [fuel_type, SetFuelType] = useState("");
-  const [engine, SetEngine] = useState("");
+export default ({ JWT, vehicle }) => {
+  const [brand, SetBrand] = useState(vehicle?.brand);
+  const [model, SetModel] = useState(vehicle?.model);
+  const [price, SetPrice] = useState(vehicle?.price);
+  const [year, SetYear] = useState(vehicle?.year);
+  const [type, SetType] = useState(vehicle?.type);
+  const [mileage, SetMileage] = useState(vehicle?.mileage);
+  const [transmission, SetTransmission] = useState(vehicle?.transmission);
+  const [fuel_type, SetFuelType] = useState(vehicle?.fuel_type);
+  const [engine, SetEngine] = useState(vehicle?.engine);
 
   return(
     <>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { removeJWT } from '../helpers/jwt';
+import SellPopup from './SellPopup';
+import Popup from 'reactjs-popup';
 
 const downloadPDF = async (jwt) => {
   fetch(
@@ -13,6 +15,16 @@ const downloadPDF = async (jwt) => {
     var file = window.URL.createObjectURL(blob);
     window.location.assign(file);
   });
+}
+
+const delete_car = (jwt, id) => {
+  fetch(
+    '/api/vehicles/' + id, {
+      method: "DELETE",
+      headers: {
+        "Authorization": jwt
+      }
+    });
 }
 
 export default ({ JWT, updateJWT }) => {
@@ -41,7 +53,6 @@ export default ({ JWT, updateJWT }) => {
         );
         const result_vehicles = await response_vehicles.json();
         SetUserVehicles(result_vehicles.vehicles);
-        console.log(result_vehicles.vehicles)
 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -49,7 +60,7 @@ export default ({ JWT, updateJWT }) => {
     };
 
     fetchData();
-  }, []);
+  }, [user_vehicles]);
 
   return (
     <>
@@ -65,9 +76,30 @@ export default ({ JWT, updateJWT }) => {
       <div style={{ textAlign: "center" }}>
         <h3 style={{ padding: "30px 0px 20px 0px" }}>Veículos Anunciados</h3>
         {user_vehicles.map((vehicle) => (
-        <a href={"/car/" + vehicle.id} style={{ textDecoration: "none", color: "#000" }}>
-          <p style={{ fontSize: "15px", fontWeight: "600", padding: "10px 0px" }}>{vehicle.brand} <span style={{ color: "#f6302f" }}>{vehicle.model}</span></p>
-        </a>
+        <div>
+          <a href={"/car/" + vehicle.id} style={{ textDecoration: "none", color: "#000" }}>
+            <p style={{ fontSize: "15px", fontWeight: "600", padding: "10px 0px" }}>{vehicle.brand} <span style={{ color: "#f6302f" }}>{vehicle.model}</span></p>
+          </a>
+          <Popup 
+          trigger={<button name='edit-car-button'></button>}
+          modal
+          contentStyle={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "900px",
+            padding: "40px",
+            boxShadow: "0px 0px 10px 6px #a1a1a150",
+            border: "none",
+            backgroundColor: "#fff",
+            borderRadius: "10px"
+          }}
+          overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}>
+            <SellPopup vehicle={vehicle} JWT={JWT} />
+          </Popup>
+          <button name='delete-car-button' onClick={() => {delete_car(JWT, vehicle.id); SetUserVehicles(user_vehicles)}}></button> 
+        </div>
         ))}
       </div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px", paddingTop: "40px" }}>

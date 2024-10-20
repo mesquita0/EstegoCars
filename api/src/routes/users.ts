@@ -12,6 +12,11 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      res.status(400).json({error: "missing information"});
+      return;
+    } 
+
     const user = await Users.getByEmail(email);
     
     if (!user || !bcrypt.compareSync(password, user.password)) {
@@ -30,6 +35,14 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { CPF, name, email, password, phone_number } = req.body;
+
+    const data = [CPF, name, email, password, phone_number];
+    for (const info of data) {
+      if (!info) {
+        res.status(400).json({error: "missing information"});
+        return;
+      } 
+    }
 
     if (await Users.getByCPF(CPF)) {
       res.status(409).json({error: "Esse CPF já está em uso."});

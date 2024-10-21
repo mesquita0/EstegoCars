@@ -31,30 +31,32 @@
                         <p><label for="marca">Marca</label>
                             <input type="text" name="marca" id="marca" required placeholder="Ex: Ford"></p>
                  
-                         <p><label for="modelo">Modelo</label>
+                        <p><label for="modelo">Modelo</label>
                             <input type="text" name="modelo" id="modelo" required placeholder="Ex: Ford"></p>
                  
-                         <p><label for="preco">Preço (R$)</label>
+                        <p><label for="preco">Preço (R$)</label>
                             <input type="number" name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000"></p>
                  
-                         <p><label for="ano">Ano</label>
+                        <p><label for="ano">Ano</label>
                             <input type="number" name="ano" id="ano" min="1886" required placeholder="Ex: 2023"></p>
                  
-                         <p><label for="tipo">Tipo</label>
+                        <p><label for="tipo">Tipo</label>
                             <input type="text" name="tipo" id="tipo" required placeholder="Ex: Carro"></p>
                  
-                         <p><label for="km">Quilometragem</label>
+                        <p><label for="km">Quilometragem</label>
                             <input type="number" name="km" id="km" required placeholder="Ex: 50.000"></p>
                  
-                         <p><label for="cambio">Câmbio</label>
+                        <p><label for="cambio">Câmbio</label>
                             <input type="text" name="cambio" id="cambio" required placeholder="Ex: Manual"></p>
                  
-                         <p><label for="combustivel">Combustível</label>
+                        <p><label for="combustivel">Combustível</label>
                             <input type="text" name="combustivel" id="combustivel" required placeholder="Ex: Flex"></p>
                  
-                         <p><label for="motor">Motor</label>
+                        <p><label for="motor">Motor</label>
                             <input type="text" name="motor" id="motor" required placeholder="Ex: 2.0"></p>
-                 
+
+                        <p><label for="image">Imagens</label>
+                            <input type="file" name="arquivos" id="imageCar" multiple/></p>
                     </div>
                     <div class="sell-buttons">
                         <button class="sell-save">Anunciar</button>
@@ -70,6 +72,7 @@
             <dialog class="profile">
                 <div class="profile-name">
                     <h1>Meu Perfil</h1>
+                    <button class="edit-button-profile">Editar</button>
                 </div>
                 <div class="profile-information">
                     <p><span>Nome: </span>Breno</p>
@@ -79,13 +82,81 @@
                 </div>
                 <div class="profile-cars">
                     <h3 class="vehicles-advertised">Veículos Anunciados</h3>
-                    <a href="car-page.html">
-                        <p>LAND ROVER <span class="color">RANGE ROVER VELAR</span></p>
-                    </a>
+                    <div class="side">
+                        <a href="car-page.html">
+                            <p>LAND ROVER<span class="color">RANGE ROVER VELAR</span></p>
+                        </a>
+                        <p><button class="edit-button"><span class="material-symbols-outlined">edit</span></button></p>
+                        <p><button class="trash-button"><span class="material-symbols-outlined">delete</span></button>
+                        </p>
+                    </div>
                 </div>
                 <div class="profile-buttons">
                     <button class="profile-close">OK</button>
                     <button class="profile-pdf">Gerar PDF</button>
+                </div>
+            </dialog>
+
+            <dialog class="edit-profile">
+                <div class="profile-name-edit">
+                    <h1>Meu Perfil</h1>
+                </div>
+                <div class="profile-information-edit">
+                    <p><span>Nome: </span>
+                        <input type="text" name="nome" id="newName" required></p>
+
+                    <p><span>CPF: </span>
+                        <input type="number" name="cpf" id="NewCPF" required></p>
+
+                    <p><span>Email: </span>
+                        <input type="text" name="email" id="newEmail" required></p>
+
+                    <p><span>Telefone: </span>
+                        <input type="text" name="telefone" id="newTelefone" required></p>
+                </div>
+                <div class="close-edits-profile-contain">
+                    <button class="close-edits-profile">OK</button>
+                </div>
+            </dialog>
+
+            <dialog class="edit-car">
+                <div class="edit-name">
+                    <h1>Editar Dados do Veículo</h1>
+                </div>
+                <div class="edit-informations">
+                    <p><label for="marca">Marca</label>
+                        <input type="text" name="marca" id="marca" required placeholder="Ex: Ford"></p>
+             
+                    <p><label for="modelo">Modelo</label>
+                        <input type="text" name="modelo" id="modelo" required placeholder="Ex: Ford"></p>
+             
+                    <p><label for="preco">Preço (R$)</label>
+                        <input type="number" name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000"></p>
+             
+                    <p><label for="ano">Ano</label>
+                        <input type="number" name="ano" id="ano" min="1886" required placeholder="Ex: 2023"></p>
+             
+                    <p><label for="tipo">Tipo</label>
+                        <input type="text" name="tipo" id="tipo" required placeholder="Ex: Carro"></p>
+             
+                    <p><label for="km">Quilometragem</label>
+                        <input type="number" name="km" id="km" required placeholder="Ex: 50.000"></p>
+             
+                    <p><label for="cambio">Câmbio</label>
+                        <input type="text" name="cambio" id="cambio" required placeholder="Ex: Manual"></p>
+             
+                    <p><label for="combustivel">Combustível</label>
+                        <input type="text" name="combustivel" id="combustivel" required placeholder="Ex: Flex"></p>
+             
+                    <p><label for="motor">Motor</label>
+                        <input type="text" name="motor" id="motor" required placeholder="Ex: 2.0"></p>
+
+                    <p><label for="image">Imagens</label>
+                        <input type="file" name="arquivos" id="imageCar" multiple/></p>
+                </div>
+                <div class="edit-buttons">
+                    <button class="save-edits">OK</button>
+                    <button class="close-edits">Cancelar</button>
                 </div>
             </dialog>
         </nav>

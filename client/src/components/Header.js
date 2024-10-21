@@ -82,9 +82,36 @@ const Header = () => {
               <ProfilePopup updateJWT={updateJWT} JWT={jwt} />
             </Popup>
             :
-            <div class="connect">
-              <Popup trigger={<button class="login">Entrar</button>}><LoginPopup updateJWT={updateJWT} /></Popup>
-              <Popup trigger={<button class="register">Criar Conta</button>}><RegisterPopup updateJWT={updateJWT}></RegisterPopup></Popup>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "180px",
+              marginRight: "40px"
+            }}>
+              <Popup trigger={<button style={{
+                  border: 'none',
+                  backgroundColor: '#f6302f',
+                  color:'#fff',
+                  padding: '10px 15px',
+                  fontSize: '14px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  justifyContent: 'right',
+                  cursor: "pointer" 
+            }}>Entrar</button>}><LoginPopup updateJWT={updateJWT} /></Popup>
+
+              <Popup trigger={<button style={{
+                  border: 'none',
+                  backgroundColor: '#f6302f',
+                  color:'#fff',
+                  padding: '10px 15px',
+                  fontSize: '14px',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  justifyContent: 'right',
+                  cursor: "pointer" 
+            }}>Criar Conta</button>}><RegisterPopup updateJWT={updateJWT}></RegisterPopup></Popup>
             </div>
             }
           </nav>

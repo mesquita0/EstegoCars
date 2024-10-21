@@ -37,8 +37,48 @@
             </div>
             
             <div class="connect">
-                <button class="login">Entrar</button>
-                <button class="register">Criar Conta</button>
+                <button class="login-button">Entrar</button>
+                <dialog class="login">
+                    <div class="login-name">
+                        <h1>Entrar</h1>
+                    </div>
+                    <div class="login-information">
+                        <p><span>Email: </span>
+                            <input type="number" name="cpf" id="CPF" required></p>
+
+                        <p><span>Senha: </span>
+                            <input type="password" name="telefone" id="telefone" required></p>
+                    </div>
+                    <div class="enter-buttons">
+                        <button class="enter">OK</button>
+                        <button class="register-button register-button-login">Criar Conta</button>
+                    </div>
+                </dialog>
+                <button class="register-button">Criar Conta</button>
+                <dialog class="register">
+                    <div class="register-name">
+                        <h1>Registrar</h1>
+                    </div>
+                    <div class="register-information">
+                        <p><span>Nome: </span>
+                            <input type="text" name="nome" id="name" required></p>
+    
+                        <p><span>CPF: </span>
+                            <input type="number" name="cpf" id="CPF" required></p>
+    
+                        <p><span>Email: </span>
+                            <input type="text" name="email" id="email" required></p>
+    
+                        <p><span>Telefone: </span>
+                            <input type="text" name="telefone" id="telefone" required></p>
+
+                        <p><span>Senha: </span>
+                            <input type="password" name="telefone" id="telefone" required></p>
+                    </div>
+                    <div class="register-buttons">
+                        <button class="register-now">OK</button>
+                    </div>
+                </dialog>
             </div>
             <dialog class="profile">
                 <div class="profile-name">

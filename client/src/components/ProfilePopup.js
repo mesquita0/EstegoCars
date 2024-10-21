@@ -77,28 +77,31 @@ export default ({ JWT, updateJWT }) => {
         <h3 style={{ padding: "30px 0px 20px 0px" }}>Veículos Anunciados</h3>
         {user_vehicles.map((vehicle) => (
         <div>
-          <a href={"/car/" + vehicle.id} style={{ textDecoration: "none", color: "#000" }}>
-            <p style={{ fontSize: "15px", fontWeight: "600", padding: "10px 0px" }}>{vehicle.brand} <span style={{ color: "#f6302f" }}>{vehicle.model}</span></p>
-          </a>
-          <Popup 
-          trigger={<button name='edit-car-button'></button>}
-          modal
-          contentStyle={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "900px",
-            padding: "40px",
-            boxShadow: "0px 0px 10px 6px #a1a1a150",
-            border: "none",
-            backgroundColor: "#fff",
-            borderRadius: "10px"
-          }}
-          overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}>
-            <SellPopup vehicle={vehicle} JWT={JWT} />
-          </Popup>
-          <button name='delete-car-button' onClick={() => {delete_car(JWT, vehicle.id); SetUserVehicles(user_vehicles)}}></button> 
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px'}}>
+            <a href={"/car/" + vehicle.id} style={{ textDecoration: "none", color: "#000" }}>
+              <p style={{ fontSize: "15px", fontWeight: "600", padding: "10px 0px" }}>{vehicle.brand} <span style={{ color: "#f6302f", paddingRight: '10px' }}>{vehicle.model}</span></p>
+            </a>
+            <p style={{fontSize: '15px', fontWeight: '600', padding: '10px 0px'}}><Popup
+              trigger={<button name='edit-car-button'></button>}
+              modal
+              contentStyle={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "900px",
+                padding: "40px",
+                boxShadow: "0px 0px 10px 6px #a1a1a150",
+                border: "none",
+                backgroundColor: "#fff",
+                borderRadius: "10px"
+              }}
+              overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}>
+                <SellPopup vehicle={vehicle} JWT={JWT} />
+              </Popup></p>
+            <p style={{fontSize: '15px', fontWeight: '600', padding: '10px 0px'}}><button name='delete-car-button' onClick={() => {delete_car(JWT, vehicle.id); SetUserVehicles(user_vehicles)}}></button> 
+            </p>
+          </div>
         </div>
         ))}
       </div>
@@ -125,7 +128,17 @@ export default ({ JWT, updateJWT }) => {
           color: "#fff",
           cursor: "pointer"
         }}>Gerar PDF</button>
-        <button name='logout-button' onClick={() => {removeJWT(); updateJWT();}}></button> 
+        <button name='logout-button' onClick={() => {removeJWT(); updateJWT();}} style={{
+          width: "200px",
+          padding: "8px",
+          border: "none",
+          fontWeight: "bolder",
+          fontSize: "16px",
+          borderRadius: "6px",
+          backgroundColor: "#f6302f",
+          color: "#fff",
+          cursor: "pointer"
+        }}>Sair</button> 
       </div>
     </>
   );

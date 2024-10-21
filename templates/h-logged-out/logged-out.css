@@ -118,7 +118,7 @@ nav {
     margin-right: 40px;
 }
 
-.login, .register {
+.login-button, .register-button {
     border: none;
     background-color: #f6302f;
     color: #fff;
@@ -130,10 +130,138 @@ nav {
 }
 
 .connect
-.login:hover, .register:hover {
+.login-button:hover, .register-button:hover {
     cursor: pointer;
 }
 
+.login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 6px #a1a1a150;
+    border: none;
+}
+
+.login-name {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.login-information {
+    color: #a1a1a1;
+}
+
+.login-information p {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-information span {
+    color: #000;
+}
+
+.login-information input {
+    padding: 5px;
+    border: 1px solid #a1a1a1;
+    color: #a1a1a150;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.enter-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 40px;
+}
+
+.enter, .register-button-login {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.enter:hover, .register-button-login:hover {
+    cursor: pointer;
+}
+/* */
+.register {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 6px #a1a1a150;
+    border: none;
+}
+
+.register-name {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.register-information {
+    color: #a1a1a1;
+}
+
+.register-information p {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-information span {
+    color: #000;
+}
+
+.register-information input {
+    padding: 5px;
+    border: 1px solid #a1a1a1;
+    color: #a1a1a150;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.register-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 40px;
+}
+
+.register-now {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.register-now:hover {
+    cursor: pointer;
+}
+/* */
 .profile {
     position: fixed;
     top: 50%;

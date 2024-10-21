@@ -165,10 +165,78 @@ span:hover {
     box-shadow: 0px 0px 10px 6px #a1a1a150;
     border: none;
 }
+/* POPUP EDIT PROFILE */
+.edit-profile {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 6px #a1a1a150;
+    border: none;
+}
 
+.profile-name-edit {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.profile-information-edit {
+    color: #a1a1a1;
+}
+
+.profile-information-edit p {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+
+.profile-information-edit span {
+    color: #000;
+}
+
+.profile-information-edit input {
+    width: 250px;
+}
+
+.close-edits-profile-contain {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.close-edits-profile {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+}
+
+.close-edits-profile:hover {
+    cursor:pointer;
+}
+/*  */
 .profile-name {
     padding-bottom: 20px;
     text-align: center;
+}
+
+.edit-button-profile {
+    width: 100px;
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+    cursor: pointer;
 }
 
 .profile-information {
@@ -187,6 +255,13 @@ span:hover {
     text-align: center;
 }
 
+.profile-cars .side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
 .profile-cars a {
     text-decoration: none;
     color: #000;
@@ -200,6 +275,7 @@ span:hover {
 
 .profile-cars .color {
     color: #f6302f;
+    padding-right: 10px;
 }
 
 .vehicles-advertised {
@@ -225,10 +301,77 @@ span:hover {
     color: #fff;
 }
 
-.profile-close:hover {
+.profile-close:hover, .profile-pdf:hover {
     cursor:pointer;
 }
+/* POPUP EDIT CAR */
+.edit-car {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 6px #a1a1a150;
+    border: none;
+}
 
+.edit-name {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.edit-informations {
+    margin: 20px 60px 40px 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.edit-informations p {
+    padding: 20px 0px;
+    width: 26%;
+    box-sizing: border-box;
+    font-weight: 700;
+}
+
+.edit-informations label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #a1a1a1;
+    font-size: 14px;
+}
+
+.edit-informations input {
+    padding: 5px;
+    border: 1px solid #a1a1a1;
+    color: #a1a1a150;
+    border-radius: 5px;
+}
+
+.edit-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.save-edits, .close-edits {
+    width: 200px;
+    padding: 8px;
+    border: none;
+    font-weight: bolder;
+    font-size: 16px;
+    border-radius: 6px;
+    background-color: #f6302f;
+    color: #fff;
+}
+
+.save-edits:hover, .close-edits:hover {
+    cursor: pointer;
+}
+/* */
 /* TARJA PRETA */
 
 .container {

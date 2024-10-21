@@ -25,16 +25,53 @@ document.addEventListener('DOMContentLoaded', () => {
         modalS.close()
     })
 
-    const buttonF = document.querySelector('.filter')
-    const modalF = document.querySelector('.filter-options')
-    const buttonCloseF = document.querySelector('.filter-options-close')
+    const buttonEP = document.querySelector('.edit-button-profile')
+    const modalEP = document.querySelector('.edit-profile')
+    const buttonCloseEP = document.querySelector('.close-edits-profile')
 
-    buttonF.addEventListener('click', () => {
-        modalF.showModal()
+    buttonEP.addEventListener('click', () => {
+        modalEP.showModal()
+        modalP.close()
     })
 
-    buttonCloseF.addEventListener('click', () => {
-        modalF.close()
+    buttonCloseEP.addEventListener('click', () => {
+        modalEP.close()
+    })
+
+    const buttonEC = document.querySelector('.edit-button')
+    const modalEC = document.querySelector('.edit-car')
+    const buttonCloseEC = document.querySelector('.close-edits')
+
+    buttonEC.addEventListener('click', () => {
+        modalEC.showModal()
+    })
+
+    buttonCloseEC.addEventListener('click', () => {
+        modalEC.close()
+    })
+
+    const buttonL = document.querySelector('.login-button')
+    const modalL = document.querySelector('.login')
+    const buttonCloseL = document.querySelector('.enter')
+
+    buttonL.addEventListener('click', () => {
+        modalL.showModal()
+    })
+
+    buttonCloseL.addEventListener('click', () => {
+        modalL.close()
+    })
+
+    const buttonR = document.querySelector('.register-button')
+    const modalR = document.querySelector('.register')
+    const buttonCloseR = document.querySelector('.close-edits')
+
+    buttonR.addEventListener('click', () => {
+        modalR.showModal()
+    })
+
+    buttonCloseR.addEventListener('click', () => {
+        modalR.close()
     })
 })
 

@@ -9,10 +9,15 @@ import RegisterPopup from './RegisterPopup';
 
 const Header = () => {
   const [jwt, SetJWTState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const dismissPopUp = () => {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     SetJWTState(getJWT());
-  }, [jwt]);
+  }, [jwt, isOpen]);
 
   const updateJWT = () => {
     SetJWTState(getJWT());
@@ -34,6 +39,7 @@ const Header = () => {
                 </a>
                 <Popup
                   trigger={<button class="op sell-button"><p>Vender</p></button>}
+                  open={isOpen}
                   modal
                   contentStyle={{
                     position: "fixed",
@@ -49,7 +55,7 @@ const Header = () => {
                   }}
                   overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}
                 >
-                  {jwt ? <SellPopup updateJWT={updateJWT} JWT={jwt} /> : <LoginPopup updateJWT={updateJWT} />}
+                  {jwt ? <SellPopup updateJWT={updateJWT} JWT={jwt} dismissPopUp={dismissPopUp}/> : <LoginPopup updateJWT={updateJWT} />}
                 </Popup>
                 <button class="op">
                   <p>Suporte</p>

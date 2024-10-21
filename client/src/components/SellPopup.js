@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ImageUploader from './ImageUploader';
 
 const sendListing = (
   jwt,
@@ -32,7 +33,7 @@ const sendListing = (
   });
 } 
 
-export default ({ JWT, vehicle }) => {
+export default ({ JWT, vehicle, dismissPopUp }) => {
   const [brand, SetBrand] = useState(vehicle?.brand);
   const [model, SetModel] = useState(vehicle?.model);
   const [price, SetPrice] = useState(vehicle?.price);
@@ -198,10 +199,11 @@ export default ({ JWT, vehicle }) => {
             borderRadius: "5px"
           }} />
         </p>
+        <ImageUploader JWT={JWT}/>
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-        <button onClick={() => sendListing(JWT, brand, model, price, year, type, mileage, transmission, fuel_type, engine)} style={{
+        <button onClick={() => {sendListing(JWT, brand, model, price, year, type, mileage, transmission, fuel_type, engine); dismissPopUp();}} style={{
           width: "200px",
           padding: "8px",
           border: "none",
@@ -212,7 +214,7 @@ export default ({ JWT, vehicle }) => {
           color: "#fff",
           cursor: "pointer"
         }}>Anunciar</button>
-        <button style={{
+        <button onClick={dismissPopUp} style={{
           width: "200px",
           padding: "8px",
           border: "none",

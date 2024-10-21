@@ -10,6 +10,7 @@ const app = express();
 const port = process.argv[3];
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 const api = express.Router();
 app.use('/api', api);

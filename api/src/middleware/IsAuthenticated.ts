@@ -4,7 +4,7 @@ import { checkAuth, decodeAuth } from "../services/authService";
 function isAuthenticated(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization;
   if (token === undefined || !checkAuth(token)) {
-    res.sendStatus(401); // TODO: redirect to login
+    res.sendStatus(401);
     return;
   }
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-export default ({ JWT }) => {
+export default ({ JWT, setUploadedImage }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const [file, setFile] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImage, setUploadedImageState] = useState(null);
 
   const handleUploadImage = (jwt) => {
       const myHeaders = new Headers();
@@ -23,6 +23,7 @@ export default ({ JWT }) => {
         .then(async (response) => {
           const imageResponse = await response.json();
           setUploadedImage(imageResponse.image_url);
+          setUploadedImageState(imageResponse.image_url);
         });
   }
 
@@ -41,13 +42,7 @@ export default ({ JWT }) => {
           <input type="file" onChange={handleSelectImage} />
           {
               previewImage ?
-                  <img src={previewImage} alt="preview-image" />
-              :
-                  null
-          }
-          {
-              uploadedImage ?
-                  <img src={uploadedImage} alt="uploaded-image" />
+                  <img src={previewImage} alt="preview-image"  style={{display: 'flex', width: '100px'}}/>
               :
                   null
           }

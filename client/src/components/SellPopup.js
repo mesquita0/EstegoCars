@@ -11,7 +11,8 @@ const sendListing = (
   mileage,
   transmission,
   fuel_type,
-  engine
+  engine,
+  image
 ) => {
   fetch("/api/vehicles/", {
     method: "POST",
@@ -28,7 +29,8 @@ const sendListing = (
       mileage,
       transmission,
       fuel_type,
-      engine
+      engine,
+      images: [image]
     })
   });
 } 
@@ -43,6 +45,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
   const [transmission, SetTransmission] = useState(vehicle?.transmission);
   const [fuel_type, SetFuelType] = useState(vehicle?.fuel_type);
   const [engine, SetEngine] = useState(vehicle?.engine);
+  const [image, SetImage] = useState(vehicle?.image);
 
   return(
     <>
@@ -199,11 +202,11 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
             borderRadius: "5px"
           }} />
         </p>
-        <ImageUploader JWT={JWT}/>
+        <ImageUploader JWT={JWT} setUploadedImage={SetImage}/>
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-        <button onClick={() => {sendListing(JWT, brand, model, price, year, type, mileage, transmission, fuel_type, engine); dismissPopUp();}} style={{
+        <button onClick={() => {sendListing(JWT, brand, model, price, year, type, mileage, transmission, fuel_type, engine, image); dismissPopUp();}} style={{
           width: "200px",
           padding: "8px",
           border: "none",

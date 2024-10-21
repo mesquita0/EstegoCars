@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Header from "../components/Header";
 
 export const CarPage = () => {
-  const [data, setData] = useState({images: [], seller: {}});
+  const [data, setData] = useState({items: [], images: [], seller: {}});
   const [img_fs, SetImgFs] = useState("");
   const { id } = useParams();
   const sliderRef = useRef(null);
@@ -73,6 +73,14 @@ export const CarPage = () => {
                 <p><span>câmbio</span>{data.transmission}</p>
                 <p><span>combustivel</span>{data.fuel_type}</p>
                 <p><span>motor</span>{data.engine}</p>
+              </div>
+              <h1 class="items">Itens Adicionais</h1>
+              <div class="informations">
+              {data.items.map((item) => (
+                <ul>
+                  <li><p>{item}</p></li>
+                </ul>
+                ))}  
               </div>
             </div>
             <div class="value-and-contact">

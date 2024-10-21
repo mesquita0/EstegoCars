@@ -37,14 +37,15 @@ router.get('/', isAuthenticated, async (req: Request, res: Response, next: NextF
       <html lang="en">
       ${(user_vehicles).map((vehicle) => `
         <div class="car-box">
-          <div class="car-image">
-              <img src=${vehicle.images[0]} alt="">
-          </div>
           <div class="car-name">
-              ${vehicle.name}
+              <h1>${vehicle.name}</h1>
           </div>
           <div class="car-description">
-              <p>${vehicle.engine}</p>
+              <p>Ano: ${vehicle.year}</p>
+              <p>Km: ${vehicle.mileage}</p>
+              <p>Câmbio: ${vehicle.transmission}</p>
+              <p>Combustivel: ${vehicle.fuel_type}</p>
+              <p>Motor: ${vehicle.engine}</p>
           </div>
           <div class="technologies">
               <img src="" alt="">

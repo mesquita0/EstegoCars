@@ -340,6 +340,11 @@
     .car-description {
         color: #a1a1a1;
         padding: 8px 16px;
+        font-size: 20px;
+    }
+
+    .car-description p {
+        padding: 3px 0px;
     }
 }
 

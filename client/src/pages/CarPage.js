@@ -75,7 +75,7 @@ export const CarPage = () => {
                 <p><span>motor</span>{data.engine}</p>
               </div>
               <h1 class="items">Itens Adicionais</h1>
-              <div class="informations">
+              <div class="adicional-items">
               {data.items.map((item) => (
                 <ul>
                   <li><p>{item}</p></li>

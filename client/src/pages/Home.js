@@ -13,7 +13,7 @@ export const HomePage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/api/vehicles/?brand=${search}&year=${year}&price=${price}&mileage=${mileage}`
+          `/api/vehicles/?brand=${search}&year=${year}&price=${price}&mileage=${mileage}&limit=4`
         );
         const result = await response.json();
         setData(result.data);
@@ -53,16 +53,17 @@ export const HomePage = () => {
               </div>
             </div>
             {data.map((item) => (
-              <a href={"/car/" + item.id} target="_self">
+              <a href={"/car/" + item.id} target="_self" style={{textDecoration: 'none'}}>
               <div class="car-box">
                 <div class="car-image">
                     <img src={item.images[0]} alt="" />
                 </div>
                 <div class="car-name">
-                  {item.name}
+                  {item.name} ({item.year})
                 </div>
                 <div class="car-description">
                   <p>{item.engine}</p>
+                  <p>R$ {item.price}</p>
                 </div>
                 <div class="technologies">
                   <img src="" alt="" />

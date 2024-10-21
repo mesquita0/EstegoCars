@@ -70,7 +70,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="text" value={brand} onChange={evt => SetBrand(evt.target.value)} name="marca" id="marca" required placeholder="Ex: Ford" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -86,7 +86,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="text" value={model} onChange={evt => SetModel(evt.target.value)} name="modelo" id="modelo" required placeholder="Ex: Focus" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -102,7 +102,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="number" value={price} onChange={evt => SetPrice(evt.target.value)} name="preco" id="preco" step="0.01" required placeholder="Ex: 45.000" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -118,7 +118,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="number" value={year} onChange={evt => SetYear(evt.target.value)} name="ano" id="ano" min="1886" required placeholder="Ex: 2023" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -134,7 +134,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="text" value={type} onChange={evt => SetType(evt.target.value)} name="tipo" id="tipo" required placeholder="Ex: Carro" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -150,7 +150,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="number" value={mileage} onChange={evt => SetMileage(evt.target.value)} name="km" id="km" required placeholder="Ex: 50.000" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -166,7 +166,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="text" value={transmission} onChange={evt => SetTransmission(evt.target.value)} name="cambio" id="cambio" required placeholder="Ex: Manual" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -182,7 +182,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="text" value={fuel_type} onChange={evt => SetFuelType(evt.target.value)} name="combustivel" id="combustivel" required placeholder="Ex: Flex" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -198,7 +198,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           <input type="text" value={engine} onChange={evt => SetEngine(evt.target.value)} name="motor" id="motor" required placeholder="Ex: 2.0" style={{
             padding: "5px",
             border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
+            color: "#000",
             borderRadius: "5px"
           }} />
         </p>
@@ -216,7 +216,7 @@ export default ({ JWT, vehicle, dismissPopUp }) => {
           backgroundColor: "#f6302f",
           color: "#fff",
           cursor: "pointer"
-        }}>Anunciar</button>
+        }}><a href='/' style={{textDecoration: 'none', color: '#fff'}}>Anunciar</a></button>
         <button onClick={dismissPopUp} style={{
           width: "200px",
           padding: "8px",

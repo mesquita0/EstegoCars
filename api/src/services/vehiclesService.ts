@@ -130,7 +130,7 @@ export default class Vehicles {
   }
 
   static async add_images(vehicle_id: number, images_url: string[]): Promise<void> {
-    const unique_images: string[] = [...new Set(images_url)];
+    const unique_images: string[] = [...new Set(images_url)].filter((x) => (x));
     if (unique_images.length === 0) return;
   
     let query = "INSERT INTO vehicles_images (vehicle_id, image_url) VALUES (?, ?)";

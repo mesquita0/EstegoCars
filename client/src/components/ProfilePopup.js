@@ -82,7 +82,7 @@ export default ({ JWT, updateJWT }) => {
               <p style={{ fontSize: "15px", fontWeight: "600", padding: "10px 0px" }}>{vehicle.brand} <span style={{ color: "#f6302f", paddingRight: '10px' }}>{vehicle.model}</span></p>
             </a>
             <p style={{fontSize: '15px', fontWeight: '600', padding: '10px 0px'}}><Popup
-              trigger={<button name='edit-car-button'></button>}
+              trigger={<button name='edit-car-button'>editar</button>}
               modal
               contentStyle={{
                 position: "fixed",
@@ -99,7 +99,7 @@ export default ({ JWT, updateJWT }) => {
               overlayStyle={{ background: "rgba(0, 0, 0, 0.5)" }}>
                 <SellPopup vehicle={vehicle} JWT={JWT} />
               </Popup></p>
-            <p style={{fontSize: '15px', fontWeight: '600', padding: '10px 0px'}}><button name='delete-car-button' onClick={() => {delete_car(JWT, vehicle.id); SetUserVehicles(user_vehicles)}}></button> 
+            <p style={{fontSize: '15px', fontWeight: '600', padding: '10px 0px'}}><button name='delete-car-button' onClick={() => {delete_car(JWT, vehicle.id); SetUserVehicles(user_vehicles)}}>deletar</button> 
             </p>
           </div>
         </div>

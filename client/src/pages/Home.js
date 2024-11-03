@@ -40,15 +40,15 @@ export const HomePage = () => {
           <section class="car-list">
             <div class="filter-selector">
               <div class="year">
-                <p>Selecione o Ano:</p>
+                <p>Selecione o Ano Mínimo:</p>
                 <input type="number" value={year} onChange={evt => setYear(evt.target.value)} min="1900" max="2025" placeholder="Ex: 2023" />
               </div>
               <div class="value">
-                <p>Selecione o Preço:</p>
+                <p>Selecione o Preço Máximo:</p>
                 <input type="number" value={price} onChange={evt => setPrice(evt.target.value)} min="0" step="0.01" placeholder="Ex: 50000.00" inputmode="decimal" />
               </div>
               <div class="km">
-                <p>Selecione a Quilometragem:</p>
+                <p>Selecione a Quilometragem Máxima:</p>
                 <input type="number" value={mileage} onChange={evt => setMileage(evt.target.value)} min="0" placeholder="Ex: 58000" />
               </div>
             </div>

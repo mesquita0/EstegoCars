@@ -55,7 +55,7 @@ export default (props) => {
       border: "none"
     }}>
       <div style={{ paddingBottom: "20px", textAlign: "center" }}>
-        <h1>Entrar</h1>
+        <h1>Registrar</h1>
       </div>
 
       <div style={{
@@ -199,7 +199,7 @@ export default (props) => {
             cursor: "pointer"
           }}
         >
-          Entrar
+          Criar Conta
         </button>
       </div>
     </div>
